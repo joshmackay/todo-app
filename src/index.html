@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title></title>
+    <link href="./styles.css" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+<div id="app-container" class=" flex h-screen">
+    <div class="sidebar bg-neutral-900 w-64 min-w-64 p-6">
+        <div class="flex w-[80%] flex-col">
+            <div id="menu-todo-date" class="menu-by-date text-white text-3xl mb-6 flex justify-between ">
+                <span class="menu-header">Todo</span><i class="ph ph-plus hover:cursor-pointer"></i>
+            </div>
+            <div id="menu-todo-projects" class="menu-by-project text-white text-3xl flex justify-between">
+                <span class="menu-header">Projects</span><i class="ph ph-plus hover:cursor-pointer"></i>
+            </div>
+        </div>
+    </div>
+
+    <div id="task-list" class="flex flex-col gap-4 w-[60%] min-w-[36rem] bg-[rgb(30,30,30)] p-6">
+
+        <div class="task-list-view-options flex justify-between text-2xl text-slate-100 ">
+            <div class="flex gap-2">
+                <div>
+                    <button id="sort-btn" class="align-middle">
+                        <i class="ph ph-text-outdent"></i>
+                    </button>
+                    <button class="align-middle">
+                        <i class="ph ph-text-indent"></i>
+                    </button>
+                </div>
+                <span id="list-name" class="text-2xl">Inbox</span>
+            </div>
+            <div class="flex">
+                <button>
+                    <i class="ph ph-funnel"></i>
+                </button>
+                <button>
+                    <i class="ph ph-dots-three"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="pt-0">
+            <input
+                    id="todo-input"
+                    class="w-full text-lg border-none rounded-[8px] text-slate-100 font-thin
+                            bg-[rgba(255,255,255,0.03)] focus:bg-[rgb(30,30,30)] "
+                    type="text"
+                    placeholder="Add Task"/>
+        </div>
+
+        <div id="todo-list-container">
+            <ul id="todo-list" class=""></ul>
+        </div>
+
+    </div>
+
+    <div id="dragger" class=" h-full cursor-ew-resize w-[5px] bg-[rgb(30,30,30)]" ></div>
+
+    <div id="detail-pane" class="task-details bg-[rgb(30,30,30)] flex-1 min-w-64 border-l-[1px] border-[rgba(255,255,255,0.1)]
+                min-w-80 ">
+
+    </div>
+</div>
+</body>
+</html>
