@@ -1,40 +1,29 @@
-import { Todo } from "./todo"
+export function createTodoList(todos){
+    const todoList = [];
+    let todoCount = 0;
 
-export class TodoList{
-    todos = [];
-    todoCount = 0;
-
-    constructor(todos){
-        this.todos = todos;
-        this.todoCount = todos.length;
-    }
-
-    createTodo(todo) {
-        this.todos.push(todo);
-        this.todoCount++
-
-    }
-
-    getTodo(id) {
-        return this.todos.filter((todo) => todo.id === id);
-    }
-
-    getTodoList(){
-        return this.todos;
-    }
-
-    getTodoCount(){
-        return this.todoCount;
-    }
-
-    updateTodo(todo) {
-        let todoIndex = this.todos.indexOf(todo);
-        this.todos[todoIndex] = todo;
-    }
-
-    deleteTodo(todo) {
-        let todoIndex = this.todos.indexOf(todo);
-        this.todos.splice(todoIndex, 1);
+    return {
+        createTodo: function (todo){
+            todos.push(todo);
+            todoCount++
+        },
+        getTodo: function(id) {
+            return todoList.filter((todo) => todo.id === id);
+        },
+        getTodoList: function() {
+            return todoList;
+        },
+        getTodoCount: function() {
+            return todoCount;
+        },
+        updateTodo: function(todo) {
+            let todoIndex = todoList.indexOf(todo);
+            todoList[todoIndex] = todo;
+        },
+        deleteTodo: function(todo) {
+            let todoIndex = todoList.indexOf(todo);
+            todoList.splice(todoIndex, 1);
+        }
     }
 }
 

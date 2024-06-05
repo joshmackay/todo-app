@@ -1,28 +1,26 @@
-export class ProjectList {
-    #projects = []
+export function createProjectList() {
+    const projects = []
 
-    constructor() {
+    return {
+        getAll: function () {
+            return projects;
+        },
 
-    }
+        getProject: function (id) {
+            return projects.find((project) => project.id === id);
+        },
 
-    getAll(){
-        return this.#projects;
-    }
+        addProject: function(project) {
+            return projects.push(project);
+        },
 
-    getProject(id){
-        return this.#projects.find((project) => project.id === id);
-    }
+        removeProject: function(toRemove) {
+            return projects.filter(project => project.id === toRemove.id);
+        },
 
-    addProject(project){
-        this.#projects.push(project);
-    }
-
-    removeProject(toRemove){
-        this.#projects = this.#projects.filter(project => project.id === toRemove.id);
-    }
-
-    updateProject(project){
-        const listIndex = this.#projects.indexOf(project);
-        this.#projects[listIndex] = project;
+        updateProject: function(project) {
+            const listIndex = projects.indexOf(project);
+            projects[listIndex] = project;
+        }
     }
 }
