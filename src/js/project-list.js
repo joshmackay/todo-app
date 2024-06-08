@@ -1,26 +1,25 @@
-export function createProjectList() {
-    const projects = []
+export default function ProjectList() {
+    this.projects = []
 
-    return {
-        getAll: function () {
-            return projects;
-        },
+    this.getAll = () => {
+        return this.projects;
+    },
 
-        getProject: function (id) {
-            return projects.find((project) => project.id === id);
-        },
+    this.getProject = (id) => {
+        return this.projects.find((project) => project.id === id);
+    },
 
-        addProject: function(project) {
-            return projects.push(project);
-        },
+    this.addProject = (project) => {
+        return this.projects.push(project);
+    },
 
-        removeProject: function(toRemove) {
-            return projects.filter(project => project.id === toRemove.id);
-        },
+    this.removeProject = (toRemove) => {
+        return this.projects.filter(project => project.id === toRemove.id);
+    },
 
-        updateProject: function(project) {
-            const listIndex = projects.indexOf(project);
-            projects[listIndex] = project;
-        }
+    this.updateProject = (project) => {
+        const listIndex = this.projects.indexOf(project);
+        this.projects[listIndex] = project;
     }
+
 }

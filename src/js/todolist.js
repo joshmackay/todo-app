@@ -1,30 +1,25 @@
-export function createTodoList(todos){
-    const todoList = [];
-    let todoCount = 0;
+export default function TodoList(){
+    this.todoList = [];
 
-    return {
-        createTodo: function (todo){
-            todos.push(todo);
-            todoCount++
-        },
-        getTodo: function(id) {
-            return todoList.filter((todo) => todo.id === id);
-        },
-        getTodoList: function() {
-            return todoList;
-        },
-        getTodoCount: function() {
-            return todoCount;
-        },
-        updateTodo: function(todo) {
-            let todoIndex = todoList.indexOf(todo);
-            todoList[todoIndex] = todo;
-        },
-        deleteTodo: function(todo) {
-            let todoIndex = todoList.indexOf(todo);
-            todoList.splice(todoIndex, 1);
-        }
+    this.addTodo = (todo) => {
+        this.todoList.push(todo);
+    }
+
+    this.getTodo = (id) => {
+        return this.todoList.filter((todo) => todo.id === id);
+    }
+
+    this.getTodoList = () => {
+        return this.todoList;
+    }
+
+    this.updateTodo = (todo) => {
+        let todoIndex = this.todoList.indexOf(todo);
+        this.todoList[todoIndex] = todo;
+    }
+
+    this.deleteTodo = (todo) => {
+        let todoIndex = this.todoList.indexOf(todo);
+        this.todoList.splice(todoIndex, 1);
     }
 }
-
-

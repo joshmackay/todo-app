@@ -3,28 +3,36 @@
 let mousePosXResizer = 0;
 let mousePosYResizer = 0;
 let taskListContainerWidth = 0;
-let draggableItem = null
+let isMouseDown = false;
 
-export function mousedownResizeHandler(e, element, container){
+export function mousedownResizeHandler(e, taskListPane, appContainer){
     //get current mouse position
+    isMouseDown = true;
+    if(e.target.closest('#dragger') == false) {
+        isMouseDown = false;
+        return
+    }
     mousePosXResizer = e.clientX;
     mousePosYResizer = e.clientY;
-    taskListContainerWidth = element.getBoundingClientRect().width;
-
-    document.addEventListener('mousemove', () => mouseResizeMoveHandler(element, container));
+    taskListContainerWidth = taskListPane.getBoundingClientRect().width;
+    document.addEventListener('mousemove', (e) => mouseResizeMoveHandler(e, taskListPane, appContainer));
     document.addEventListener('mouseup', mouseUpResizeHandler)
 }
 
-export function mouseResizeMoveHandler(e, element, container){
+function mouseResizeMoveHandler(e, taskListPane, appContainer){
+
+    if(!isMouseDown) return
     let dx = e.clientX - mousePosXResizer;
     let dy = e.clientY - mousePosYResizer;
-    taskListPane.style.width = `${((taskListContainerWidth + dx) *100)/container.getBoundingClientRect().width}%`
+    taskListPane.style.width = `${((taskListContainerWidth + dx) *100)/appContainer.getBoundingClientRect().width}%`
 }
 
-export function mouseUpResizeHandler(e){
+function mouseUpResizeHandler(e){
     document.removeEventListener('mousemove', mouseResizeMoveHandler)
     document.removeEventListener('mouseup', mouseUpResizeHandler)
+    isMouseDown = false;
 }
+
 
 
 

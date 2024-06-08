@@ -1,13 +1,14 @@
+import ProjectList from "./project-list";
 
-export function getOrder(){
-    return localStorage.getItem("order") || []
 
+export function addToLocalStorage(projectList){
+    localStorage.setItem("todoList", JSON.stringify(projectList));
 }
 
-export function getTodos(){
-    return JSON.parse(localStorage.getItem("todoList")) || []
+export function getProjectsFromLocalStorage(){
+    return JSON.parse(localStorage.getItem("todoList")) || new ProjectList()
 }
 
-export function addToLocalStorage(todoList){
-    localStorage.setItem("todoList", JSON.stringify(todoList));
-}
+// export function getOrder(){
+//     return localStorage.getItem("order") || []
+// }
