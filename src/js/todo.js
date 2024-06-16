@@ -1,21 +1,21 @@
-export function createTodo(title,
-                           id,
+export function Todo(title,
+                           id = 0,
                            description,
                            priority,
                            dueDate,
-                           listId){
-    const newId = id;
+                           projectId){
+    let newId = id;
     if(id === 0){
-        const newId = Date.now().toString(36) + Math.random().toString(36);
+        newId = Date.now().toString(36) + Math.random().toString(36);
     }
 
     return {
-        newId,
+        'id': newId,
         title,
         description,
         priority,
         dueDate,
-        listId
+        projectId
     }
 }
 

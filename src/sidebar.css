@@ -1,0 +1,81 @@
+.sidebar{
+    background-color: #171717;
+    min-width: 16rem;
+    padding: 1.5rem;
+}
+
+.sidebar-inner-container{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.menu-by-date{
+    width: 100%;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+}
+
+.menu-header{
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.menu-todo-projects{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.menu-by-project{
+    width: 100%;
+    color: white;
+    font-size: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#add-project-btn{
+
+}
+
+#add-project-btn i:hover{
+    cursor: pointer;
+}
+
+#project-list{
+
+}
+
+#new-project-controls{
+
+}
+
+#project-input{
+    display: none;
+    width: 100%;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 0.5px;
+    color: var(--input-text-color);
+    font-weight: 200;
+    background-color: rgba(255,255,255,0.03);
+
+}
+
+#project-input:focus{
+    background-color: rgb(30,30,30);
+}
+
+#new-project-add{
+
+}
+
+#new-project-cancel{
+
+}
+

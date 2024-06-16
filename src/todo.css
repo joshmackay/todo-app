@@ -1,0 +1,46 @@
+.todo-item{
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    height: 40px;
+    padding: 0 18px;
+    align-items: center;
+    border-radius: 0.5rem;
+    position: relative;
+    will-change: contents;
+}
+
+.todo-item:hover{
+    background-color: rgba(255,255,255,0.06)
+}
+
+.todo-item-text{
+    width: 100%;
+    height: 100%;
+    color: #cbd5e1;
+    border-bottom: solid 1px rgb(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+}
+
+.todo-item-text:hover{
+    border-color: transparent;
+}
+
+.handle{
+    color: white;
+    cursor: grab;
+}
+
+.todo-item:has(+ .todo-item:hover) .todo-item-text {
+    border-bottom: transparent solid 1px;
+}
+
+.todo-item:hover .todo-item-text{
+    border-bottom: transparent solid 1px;
+
+}
+
+.my-handle:hover{
+    cursor: grab;
+}

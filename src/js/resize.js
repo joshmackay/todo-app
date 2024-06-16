@@ -8,7 +8,7 @@ let isMouseDown = false;
 export function mousedownResizeHandler(e, taskListPane, appContainer){
     //get current mouse position
     isMouseDown = true;
-    if(e.target.closest('#dragger') == false) {
+    if(e.target.closest('#resize-handle') == false) {
         isMouseDown = false;
         return
     }

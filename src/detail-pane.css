@@ -1,0 +1,8 @@
+#detail-pane{
+    background-color: rgb(30,30,30);
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 16rem;
+    border-left: 1px solid rgba(255,255,255,0.1);
+    min-width: 20rem;
+}

@@ -1,10 +1,12 @@
-import ProjectList, { createProjectList } from "./project-list";
-import { createTodoList } from "./todolist";
-import { createTodo } from "./todo";
-import {getTodos, addToLocalStorage, getOrder, getProjectList, getProjectsFromLocalStorage} from "./local-storage";
+import ProjectList, { defaultLists} from "./project-list";
+import { Todo } from "./todo";
+import {addToLocalStorage } from "./local-storage";
 import { mousedownResizeHandler } from './resize'
-import { renderTodoList, renderTodoElement } from "./view";
+import * as view from "./view";
 import { createSortable } from "./sortbable";
+import {ProjectInput} from "../components/newProjectInput";
+import {renderProjectList, renderTodoList} from "./view";
+
 
 //get DOM elements
 const appContainer = document.getElementById("app-container");
@@ -12,40 +14,78 @@ const todoMenu = document.getElementById('menu-todo-date');
 const taskListPane = document.getElementById("task-list");
 const detailPane = document.getElementById('detail-pane')
 const todoInput = document.getElementById("todo-input");
-const dragger = document.getElementById('dragger');
+const resizeHandle = document.getElementById('resize-handle');
 const todoListElement = document.getElementById("todo-list");
-const projectMenu = document.getElementById('menu-todo-project');
+const projectListSidebar = document.getElementById('menu-todo-project');
+const projectControls = document.getElementById('new-project-controls')
+const addProjectBtn = document.getElementById('add-project-btn');
+const projectInput = document.getElementById('project-input')
+const projectList = document.getElementById('project-list');
 
-let projectList = new ProjectList();
+let projects = new ProjectList();
+let selectedProject = null;
 
 //initialise app, called from page load event
-export default function init() {
-    projectList = loadData();
+export function init() {
 
-    todoInput.addEventListener('keypress', function (event) {
-        if (event.key === "Enter" && todoInput.value.trim() !== "") {
-            addNewTodo();
-            todoInput.value = "";
-        }
-    })
+    setEventListeners();
+    selectedProject = projects.getAllProjects()[0]
+    renderProjectList(projects.getAllProjects())
+    renderTodoList(selectedProject.todoList)
+    //view.renderTodoList(selectedProject.todoList.getTodoList())
 
     //const sortable = createSortable(todoListElement);
     //const sortOrder = sortable.options.store.get(sortable)
-    dragger.addEventListener('mousedown', (e) => mousedownResizeHandler(e, taskListPane, appContainer));
 }
 
-function loadData(){
-    const storedProjects = getProjectsFromLocalStorage();
+function loadData() {
+    // const storedProjects = getProjectsFromLocalStorage();
+    //
+    // storedProjects.forEach(project => {
+    //     let
+    // })
+}
 
-    storedProjects.forEach(project => {
-        let 
+function addNewProject() {
+    projectControls.classList.remove('hidden')
+    // let test = new ProjectInput()
+    // console.log(test)
+    //
+    // projectList.appendChild(test)
+}
+
+function addNewTodo(todoTitle) {
+    projects.addTodo(selectedProject, todoTitle)
+    //addToLocalStorage(todoList.getTodoList())
+    renderTodoList(selectedProject.todoList);
+    console.log(selectedProject.todoList)
+}
+
+function setEventListeners() {
+    addProjectBtn.addEventListener('click', addNewProject);
+
+    //projectControls.addEventListener('click', newProjectHandler)
+
+    projectInput.addEventListener('keypress', (e) => {
+        if (e.key === "Enter" && projectInput.value.trim() !== "") {
+            projectInput.classList.toggle('hidden')
+        }
     })
 
+    resizeHandle.addEventListener('mousedown', (e) => mousedownResizeHandler(e, taskListPane, appContainer));
+
+    todoInput.addEventListener('keypress', function (event) {
+        if (event.key === "Enter" && todoInput.value.trim() !== "") {
+            addNewTodo(todoInput.value);
+            todoInput.value = "";
+        }
+    })
 }
 
-export function addNewTodo(todoTitle){
-    let newTodo = createTodo(todoTitle);
-    todoList.createTodo(newTodo)
-    addToLocalStorage(todoList.getTodoList())
-    renderTodoElement(todoListElement, newTodo);
-}
+// function newProjectHandler(e) {
+//     if (e.target.id === 'new-project-cancel') {
+//         projectControls.classList.toggle('hidden')
+//     }
+// }
+
+

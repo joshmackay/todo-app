@@ -9,33 +9,33 @@
 </head>
 <body>
 <div id="app-container" class=" flex h-screen">
-    <div class="sidebar bg-neutral-900 w-64 min-w-64 p-6">
-        <div class="flex w-[80%] flex-col">
-            <div id="menu-todo-date" class="menu-by-date text-white text-3xl mb-6 flex justify-between ">
-                <span class="menu-header">Todo</span><i class="ph ph-plus hover:cursor-pointer"></i>
+    <div class="sidebar">
+        <div class="sidebar-inner-container">
+            <div id="menu-todo-date" class="menu-by-date">
+                <span class="menu-header">Todo</span>
             </div>
-            <div id="menu-todo-projects" class="menu-by-project text-white text-3xl flex justify-between">
-                <span class="menu-header">Projects</span><i class="ph ph-plus hover:cursor-pointer"></i>
+            <div id="menu-todo-projects" class="menu-by-project">
+                <span class="menu-header mb-4">Projects<i id="add-project-btn" class="ph ph-plus"></i></span>
+                <ul id="project-list"></ul>
+                <div id="new-project-controls" class="hidden">
+                    <input type="text" id="project-input" class="" />
+                    <div>
+                        <button id="new-project-add">Add</button>
+                        <button id="new-project-cancel">Cancel</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="task-list" class="flex flex-col gap-4 w-[60%] min-w-[36rem] bg-[rgb(30,30,30)] p-6">
+    <div id="task-list" class="">
 
-        <div class="task-list-view-options flex justify-between text-2xl text-slate-100 ">
-            <div class="flex gap-2">
-                <span id="list-name" class="text-2xl">Inbox</span>
-            </div>
-
+        <div class="task-list-view-options">
+                <span id="list-name" class="">Inbox</span>
         </div>
 
-        <div class="pt-0">
-            <input
-                    id="todo-input"
-                    class="w-full text-lg border-none rounded-[8px] text-slate-100 font-thin
-                            bg-[rgba(255,255,255,0.03)] focus:bg-[rgb(30,30,30)] "
-                    type="text"
-                    placeholder="Add Task"/>
+        <div id="task-input-container" class="">
+            <input id="todo-input" class="" type="text" placeholder="Add Task"/>
         </div>
 
         <div id="todo-list-container">
@@ -44,10 +44,9 @@
 
     </div>
 
-    <div id="dragger" class=" h-full cursor-ew-resize w-[5px] bg-[rgb(30,30,30)]" ></div>
+    <div id="resize-handle" class="" ></div>
 
-    <div id="detail-pane" class="task-details bg-[rgb(30,30,30)] flex-1 min-w-64 border-l-[1px] border-[rgba(255,255,255,0.1)]
-                min-w-80 ">
+    <div id="detail-pane" class="task-details">
 
     </div>
 </div>
