@@ -6,7 +6,7 @@ export function addToLocalStorage(projectList){
 }
 
 export function getProjectsFromLocalStorage(){
-    return JSON.parse(localStorage.getItem("todoList")) || new ProjectList()
+    return JSON.parse(localStorage.getItem("todoList")) || null
 }
 
 // export function getOrder(){

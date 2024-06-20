@@ -2,23 +2,27 @@ import { Todo } from "./todo";
 import Project from "./project";
 
 export default function ProjectList() {
-    let _projects = defaultLists
+    let _projects = []
 
     this.getAllProjects = () => {
         return _projects;
-    },
+    }
 
     this.getProject = (id) => {
         return _projects.find((project) => project.id === id);
-    },
+    }
 
     this.addProject = (project) => {
-        return _projects.push(project);
-    },
+        _projects.push(project);
+    }
+
+    this.addRange = (projectList) => {
+        projectList.forEach(project => this.addProject(project))
+    }
 
     this.removeProject = (toRemove) => {
         _projects = _projects.filter(project => project.id !== toRemove.id);
-    },
+    }
 
     this.updateProject = (project) => {
         const listIndex = _projects.indexOf(project);
@@ -26,31 +30,12 @@ export default function ProjectList() {
     }
 
     this.addTodo = (project, title) => {
-        const newTodo = new Todo(title)
-        _projects.find(item => item.id === project.id).todoList.push(newTodo);
+        _projects.find(item => item.id === project.id).todoList.push(new Todo(title));
     }
 
-    // this.getTodo = (project, id) => {
-    //     return _todoList.filter((todo) => todo.id === id);
-    // }
-    //
-    // this.updateTodo = (project, todo) => {
-    //     let todoIndex = _projects.indexOf(todo);
-    //     _todoList[todoIndex] = todo;
-    // }
-    //
-    // this.deleteTodo = (todo) => {
-    //     let todoIndex = _todoList.indexOf(todo);
-    //     _todoList.splice(todoIndex, 1);
-    // }
-
 }
 
-function initialiseDefaultLists(){
-
-}
-
-let defaultLists = [
+export const defaultLists = [
     {
         'name': 'Personal',
         'id': '1',

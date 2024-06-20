@@ -1,4 +1,4 @@
-import {init} from "./js/controller";
+import Controller from "./js/controller";
 import "./styles.css"
 import "./task-pane.css"
 import "./detail-pane.css"
@@ -8,5 +8,6 @@ import {list} from "postcss";
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    init();
+    const controller = new Controller()
+    controller.initialise();
 })

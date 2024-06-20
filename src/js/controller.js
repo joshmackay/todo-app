@@ -1,91 +1,79 @@
 import ProjectList, { defaultLists} from "./project-list";
 import { Todo } from "./todo";
-import {addToLocalStorage } from "./local-storage";
+import {addToLocalStorage, getProjectsFromLocalStorage} from "./local-storage";
 import { mousedownResizeHandler } from './resize'
-import * as view from "./view";
 import { createSortable } from "./sortbable";
 import {ProjectInput} from "../components/newProjectInput";
-import {renderProjectList, renderTodoList} from "./view";
+import View from "./view";
+import Project from "./Project";
 
 
-//get DOM elements
-const appContainer = document.getElementById("app-container");
-const todoMenu = document.getElementById('menu-todo-date');
-const taskListPane = document.getElementById("task-list");
-const detailPane = document.getElementById('detail-pane')
-const todoInput = document.getElementById("todo-input");
-const resizeHandle = document.getElementById('resize-handle');
-const todoListElement = document.getElementById("todo-list");
-const projectListSidebar = document.getElementById('menu-todo-project');
-const projectControls = document.getElementById('new-project-controls')
-const addProjectBtn = document.getElementById('add-project-btn');
-const projectInput = document.getElementById('project-input')
-const projectList = document.getElementById('project-list');
+export default function Controller() {
 
-let projects = new ProjectList();
-let selectedProject = null;
 
-//initialise app, called from page load event
-export function init() {
+    this.view = new View();
+    this.projects = new ProjectList();
+    this.selectedProject = null;
 
-    setEventListeners();
-    selectedProject = projects.getAllProjects()[0]
-    renderProjectList(projects.getAllProjects())
-    renderTodoList(selectedProject.todoList)
-    //view.renderTodoList(selectedProject.todoList.getTodoList())
+    this.handleAddNewTodo = this.handleAddNewTodo.bind(this)
+    this.view.bindAddTodo(this.handleAddNewTodo)
 
-    //const sortable = createSortable(todoListElement);
-    //const sortOrder = sortable.options.store.get(sortable)
+    this.handleAddNewProject = this.handleAddNewProject.bind(this)
+    this.view.bindAddProject(this.handleAddNewProject)
+
+    this.view.bindProjectClickHandler(this.setActiveProject.bind(this))
+
+    this.handleAddNewProject = this.handleAddNewProject.bind(this)
+
+    this.initialise = () => {
+        this.getProjects()
+        this.selectedProject = this.projects.getAllProjects()[0]
+
+        this.view.setEventListeners();
+        //this.selectedProject = this.projects.getAllProjects()[0]
+        this.view.renderProjectList(this.projects.getAllProjects())
+
+        this.view.renderTodoList(this.selectedProject.todoList)
+
+        //const sortable = createSortable(todoListElement);
+        //const sortOrder = sortable.options.store.get(sortable)
+    }
+
+    function loadData() {
+        // const storedProjects = getProjectsFromLocalStorage();
+        //
+        // storedProjects.forEach(project => {
+        //     let
+        // })
+    }
 }
 
-function loadData() {
-    // const storedProjects = getProjectsFromLocalStorage();
-    //
-    // storedProjects.forEach(project => {
-    //     let
-    // })
-}
-
-function addNewProject() {
-    projectControls.classList.remove('hidden')
-    // let test = new ProjectInput()
-    // console.log(test)
-    //
-    // projectList.appendChild(test)
-}
-
-function addNewTodo(todoTitle) {
-    projects.addTodo(selectedProject, todoTitle)
-    //addToLocalStorage(todoList.getTodoList())
-    renderTodoList(selectedProject.todoList);
-    console.log(selectedProject.todoList)
-}
-
-function setEventListeners() {
-    addProjectBtn.addEventListener('click', addNewProject);
-
-    //projectControls.addEventListener('click', newProjectHandler)
-
-    projectInput.addEventListener('keypress', (e) => {
-        if (e.key === "Enter" && projectInput.value.trim() !== "") {
-            projectInput.classList.toggle('hidden')
-        }
+Controller.prototype.getProjects = function(){
+    let storageObj = getProjectsFromLocalStorage()
+    if(storageObj === null) storageObj = defaultLists
+    storageObj.forEach( project => {
+        let newProject = new Project(project.name, project.id)
+        project.todoList.forEach(todo => newProject.todoList.push(new Todo(todo.title, todo.id))
+        )
+        this.projects.addProject(newProject)
     })
 
-    resizeHandle.addEventListener('mousedown', (e) => mousedownResizeHandler(e, taskListPane, appContainer));
-
-    todoInput.addEventListener('keypress', function (event) {
-        if (event.key === "Enter" && todoInput.value.trim() !== "") {
-            addNewTodo(todoInput.value);
-            todoInput.value = "";
-        }
-    })
 }
 
-// function newProjectHandler(e) {
-//     if (e.target.id === 'new-project-cancel') {
-//         projectControls.classList.toggle('hidden')
-//     }
-// }
+Controller.prototype.handleAddNewTodo = function(todo){
+    this.selectedProject.todoList.push(new Todo(todo))
+    this.view.renderTodoList(this.selectedProject.todoList)
+    addToLocalStorage(this.projects.getAllProjects())
+}
 
+Controller.prototype.handleAddNewProject = function(project) {
+    this.projects.addProject(new Project(project))
+    console.log(this.projects.getAllProjects())
+    this.view.renderProjectList(this.projects.getAllProjects());
+    addToLocalStorage(this.projects.getAllProjects())
+}
 
+Controller.prototype.setActiveProject = function(projectId) {
+    this.selectedProject = this.projects.getProject(projectId)
+    this.view.renderTodoList(this.selectedProject.todoList)
+}
