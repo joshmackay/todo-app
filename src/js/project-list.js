@@ -33,6 +33,9 @@ export default function ProjectList() {
         _projects.find(item => item.id === project.id).todoList.push(new Todo(title));
     }
 
+    this.toJSON = function(){
+        return _projects.map(project => project.toJSON())
+    }
 }
 
 export const defaultLists = [

@@ -2,7 +2,8 @@ import ProjectList from "./project-list";
 
 
 export function addToLocalStorage(projectList){
-    localStorage.setItem("todoList", JSON.stringify(projectList));
+    console.log(projectList.toJSON())
+    localStorage.setItem("todoList", JSON.stringify(projectList.toJSON()));
 }
 
 export function getProjectsFromLocalStorage(){

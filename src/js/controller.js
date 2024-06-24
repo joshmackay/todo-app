@@ -6,6 +6,7 @@ import { createSortable } from "./sortbable";
 import {ProjectInput} from "../components/newProjectInput";
 import View from "./view";
 import Project from "./Project";
+import { formatISO } from "date-fns";
 
 
 export default function Controller() {
@@ -50,27 +51,36 @@ export default function Controller() {
 
 Controller.prototype.getProjects = function(){
     let storageObj = getProjectsFromLocalStorage()
+    console.log(storageObj)
     if(storageObj === null) storageObj = defaultLists
     storageObj.forEach( project => {
         let newProject = new Project(project.name, project.id)
-        project.todoList.forEach(todo => newProject.todoList.push(new Todo(todo.title, todo.id))
-        )
+        project.todoList.forEach(todo => {
+            newProject.addTodo(new Todo(
+                todo.title,
+                todo.id,
+                project.id,
+                todo.dueDate,
+                todo.priority))
+        })
         this.projects.addProject(newProject)
     })
-
+    this.setActiveProject(this.projects.getAllProjects()[0].id)
 }
 
-Controller.prototype.handleAddNewTodo = function(todo){
-    this.selectedProject.todoList.push(new Todo(todo))
+Controller.prototype.handleAddNewTodo = function(todoName, todoDate){
+    let newTodo = new Todo(todoName, 0, this.selectedProject.id, todoDate ? formatISO(todoDate) : null)
+    console.log(newTodo.toJSON())
+    this.selectedProject.addTodo(newTodo)
     this.view.renderTodoList(this.selectedProject.todoList)
-    addToLocalStorage(this.projects.getAllProjects())
+    addToLocalStorage(this.projects)
 }
 
 Controller.prototype.handleAddNewProject = function(project) {
     this.projects.addProject(new Project(project))
     console.log(this.projects.getAllProjects())
     this.view.renderProjectList(this.projects.getAllProjects());
-    addToLocalStorage(this.projects.getAllProjects())
+    addToLocalStorage(this.projects)
 }
 
 Controller.prototype.setActiveProject = function(projectId) {

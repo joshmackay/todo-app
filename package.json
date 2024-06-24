@@ -11,7 +11,6 @@
   "author": "Josh MacKay",
   "license": "ISC",
   "devDependencies": {
-    "@tailwindcss/forms": "^0.5.7",
     "browser-sync-webpack-plugin": "^2.3.0",
     "css-loader": "^6.10.0",
     "html-webpack-plugin": "^5.6.0",
@@ -24,6 +23,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "date-fns": "^3.6.0",
     "lucide": "^0.365.0",
     "sortablejs": "^1.15.2"
   }

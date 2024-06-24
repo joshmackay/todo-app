@@ -4,8 +4,11 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
     entry: './src/index.js',
+
     mode: "development",
+
     watch: true,
+
     plugins: [
         new HtmlWebpackPlugin({
             title: "Get It Done",
@@ -14,11 +17,13 @@ module.exports = {
         }),
 
     ],
+
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, 'dist'),
         clean: true,
     },
+
     module: {
         rules: [
             {

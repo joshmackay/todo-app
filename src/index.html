@@ -5,10 +5,14 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title></title>
     <link href="./styles.css" rel="stylesheet">
+    <link href="./sidebar.css" rel="stylesheet">
+    <link href="./task-pane.css" rel="stylesheet">
+    <link href="./detail-pane.css" rel="stylesheet">
+    <link href="./todo.css.css" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
-<div id="app-container" class=" flex h-screen">
+<div id="app-container" class="">
     <div class="sidebar">
         <div class="sidebar-inner-container">
             <div id="menu-todo-date" class="menu-by-date">
@@ -36,6 +40,11 @@
 
         <div id="task-input-container" class="">
             <input id="todo-input" class="" type="text" placeholder="Add Task"/>
+            <div id="date-picker-toggle">
+                <i id="todo-date-icon" class="ph-thin ph-calendar"></i>
+                <input id="todo-date-input" type="date"  />
+            </div>
+            <i id="priority-button" class="ph-thin ph-caret-down"></i>
         </div>
 
         <div id="todo-list-container">
