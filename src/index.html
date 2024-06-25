@@ -44,7 +44,16 @@
                 <i id="todo-date-icon" class="ph-thin ph-calendar"></i>
                 <input id="todo-date-input" type="date"  />
             </div>
-            <i id="priority-button" class="ph-thin ph-caret-down"></i>
+            <div id="priority-container">
+                <i id="priority-button" class="ph-thin ph-caret-down"></i>
+                <div id="priority-modal">
+                    <ul>
+                        <li class="priority-item priority-high"><i class="ph-fill ph-flag"></i>High</li>
+                        <li class="priority-item priority-medium"><i class="ph-fill ph-flag"></i>Medium</li>
+                        <li class="priority-item priority-low"><i class="ph-fill ph-flag"></i>Low</li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
         <div id="todo-list-container">

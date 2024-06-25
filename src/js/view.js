@@ -18,6 +18,9 @@ export default function View() {
     let addProjectBtn = document.getElementById('add-project-btn');
     let projectInput = document.getElementById('project-input')
     let projectListElement = document.getElementById('project-list');
+    let priorityModal = document.getElementById('priority-modal')
+    const priorityButton = document.getElementById('priority-button')
+    const priorityToggle = document.getElementById('priority-container')
     let projectClickHandler = null
 
     this.bindAddTodo = function(handler){
@@ -45,10 +48,8 @@ export default function View() {
     }
 
     this.setEventListeners = function () {
-        //
 
-        //projectControls.addEventListener('click', newProjectHandler)
-
+        priorityButton.addEventListener('click', togglePriorityModal)
         resizeHandle.addEventListener('mousedown', (e) => mousedownResizeHandler(e, taskListPane, appContainer));
 
         // this.todoInput.addEventListener('keypress', function (event) {
@@ -57,6 +58,11 @@ export default function View() {
         //         this.todoInput.value = "";
         //     }
         // })
+    }
+
+    const togglePriorityModal = function(e){
+        console.log(this)
+        priorityModal.classList.toggle('show')
     }
 
     this.renderProjectList = function(projectList) {
