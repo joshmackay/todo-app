@@ -1,6 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 :root{
     --input-text-color: #f1f5f9;
@@ -12,7 +9,9 @@
     
 }
 
-*{
+*:not(i){
+    font-family: sans-serif;
+    color: #f1f5f9;
     margin: 0;
 }
 
