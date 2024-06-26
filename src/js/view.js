@@ -50,6 +50,7 @@ export default function View() {
     this.setEventListeners = function () {
 
         priorityButton.addEventListener('click', togglePriorityModal)
+        document.addEventListener('click', hideModal)
         resizeHandle.addEventListener('mousedown', (e) => mousedownResizeHandler(e, taskListPane, appContainer));
 
         // this.todoInput.addEventListener('keypress', function (event) {
@@ -60,8 +61,18 @@ export default function View() {
         // })
     }
 
+    const hideModal = function(e){
+
+        if(!e.target.matches('#priority-modal')){
+            let modal = document.getElementById('priority-modal')
+            if(modal.classList.contains('show')){
+                priorityModal.classList.toggle('show')
+            }
+            //
+        }
+    }
+
     const togglePriorityModal = function(e){
-        console.log(this)
         priorityModal.classList.toggle('show')
     }
 
