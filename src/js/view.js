@@ -62,18 +62,17 @@ export default function View() {
     }
 
     const hideModal = function(e){
-
-        if(!e.target.matches('#priority-modal')){
-            let modal = document.getElementById('priority-modal')
-            if(modal.classList.contains('show')){
-                priorityModal.classList.toggle('show')
-            }
+        let modal = document.getElementById('priority-modal')
+        if(!e.target.matches('#priority-button') || !e.target.matches('#priority-modal')){
+            //priorityModal.classList.remove('show')
             //
         }
     }
 
     const togglePriorityModal = function(e){
-        priorityModal.classList.toggle('show')
+        if(!priorityModal.classList.contains('show')){
+            priorityModal.classList.add('show')
+        }
     }
 
     this.renderProjectList = function(projectList) {
