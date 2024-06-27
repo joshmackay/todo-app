@@ -36,6 +36,7 @@ export default function ProjectList() {
     this.toJSON = function(){
         return _projects.map(project => project.toJSON())
     }
+    
 }
 
 export const defaultLists = [

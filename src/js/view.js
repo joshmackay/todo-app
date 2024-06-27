@@ -21,6 +21,10 @@ export default function View() {
     let priorityModal = document.getElementById('priority-modal')
     const priorityButton = document.getElementById('priority-button')
     const priorityToggle = document.getElementById('priority-container')
+    const priorityItems = document.getElementsByClassName('priority-item')
+    const allTodoInputs = document.querySelectorAll('.todo-input')
+    const todoInputIcons = document.querySelectorAll('.todo-input-icon')
+
     let projectClickHandler = null
 
     this.bindAddTodo = function(handler){
@@ -48,9 +52,24 @@ export default function View() {
     }
 
     this.setEventListeners = function () {
+        allTodoInputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                document.getElementById('task-input-container').classList.add('focused')
+                if(input.matches('#todo-date-input')){
+                    document.getElementById('todo-date-icon').classList.add('active-icon')
+                }
+            })
+            input.addEventListener('focusout', function(){
+                document.getElementById('task-input-container').classList.remove('focused')
+                if(input.matches('#todo-date-input')){
+                    document.getElementById('todo-date-icon').classList.remove('active-icon')
+                }
+            })
+        })
 
         priorityButton.addEventListener('click', togglePriorityModal)
-        document.addEventListener('click', hideModal)
+        document.addEventListener('click', cancelModal)
+
         resizeHandle.addEventListener('mousedown', (e) => mousedownResizeHandler(e, taskListPane, appContainer));
 
         // this.todoInput.addEventListener('keypress', function (event) {
@@ -61,18 +80,20 @@ export default function View() {
         // })
     }
 
-    const hideModal = function(e){
-        let modal = document.getElementById('priority-modal')
-        if(!e.target.matches('#priority-button') || !e.target.matches('#priority-modal')){
-            //priorityModal.classList.remove('show')
-            //
+    const cancelModal = function(e){
+        if(!e.target.closest('#task-input-container') &&
+
+            priorityModal.matches('.show')){
+            priorityModal.classList.remove('show')
+            document.getElementById('task-input-container').classList.remove('focused')
+            document.getElementById('priority-button').classList.remove('active-icon')
         }
     }
 
     const togglePriorityModal = function(e){
-        if(!priorityModal.classList.contains('show')){
-            priorityModal.classList.add('show')
-        }
+        document.getElementById('task-input-container').classList.add('focused')
+        document.getElementById('priority-button').classList.add('active-icon')
+        priorityModal.classList.toggle('show')
     }
 
     this.renderProjectList = function(projectList) {
