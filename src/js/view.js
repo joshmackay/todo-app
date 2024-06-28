@@ -5,24 +5,25 @@ import {mousedownResizeHandler} from "./resize";
 export default function View() {
 
     //get DOM elements
-    let appContainer = document.getElementById("app-container");
-    let todoMenu = document.getElementById('menu-todo-date');
-    let taskListPane = document.getElementById("task-list");
-    let detailPane = document.getElementById('detail-pane')
-    let todoInput = document.getElementById("todo-input");
-    let dateInput = document.getElementById('todo-date-input')
-    let resizeHandle = document.getElementById('resize-handle');
-    let todoListElement = document.getElementById("todo-list");
-    let projectListSidebar = document.getElementById('menu-todo-project');
-    let projectControls = document.getElementById('new-project-controls')
-    let addProjectBtn = document.getElementById('add-project-btn');
-    let projectInput = document.getElementById('project-input')
-    let projectListElement = document.getElementById('project-list');
-    let priorityModal = document.getElementById('priority-modal')
+    const appContainer = document.getElementById("app-container");
+    const todoMenu = document.getElementById('menu-todo-date');
+    const taskListPane = document.getElementById("task-list");
+    const detailPane = document.getElementById('detail-pane')
+    const todoInputContainer = document.getElementById('task-input-container')
+    const todoInput = document.getElementById("todo-input");
+    const dateInput = document.getElementById('todo-date-input')
+    const todoListElement = document.getElementById("todo-list");
+    const projectListSidebar = document.getElementById('menu-todo-project');
+    const projectControls = document.getElementById('new-project-controls')
+    const addProjectBtn = document.getElementById('add-project-btn');
+    const projectInput = document.getElementById('project-input')
+    const projectListElement = document.getElementById('project-list');
+    const priorityContainer = document.getElementById('priority-container')
+    const priorityModal = document.getElementById('priority-modal')
     const priorityButton = document.getElementById('priority-button')
     const priorityToggle = document.getElementById('priority-container')
     const priorityItems = document.getElementsByClassName('priority-item')
-    const allTodoInputs = document.querySelectorAll('.todo-input')
+    const allTodoInputs = document.getElementsByClassName('todo-input-control')
     const todoInputIcons = document.querySelectorAll('.todo-input-icon')
 
     let projectClickHandler = null
@@ -52,23 +53,13 @@ export default function View() {
     }
 
     this.setEventListeners = function () {
-        allTodoInputs.forEach(input => {
-            input.addEventListener('focus', function() {
-                document.getElementById('task-input-container').classList.add('focused')
-                if(input.matches('#todo-date-input')){
-                    document.getElementById('todo-date-icon').classList.add('active-icon')
-                }
-            })
-            input.addEventListener('focusout', function(){
-                document.getElementById('task-input-container').classList.remove('focused')
-                if(input.matches('#todo-date-input')){
-                    document.getElementById('todo-date-icon').classList.remove('active-icon')
-                }
-            })
+        Array.from(allTodoInputs).forEach(input => {
+            toggleTodoContainerHighlights(input);
         })
 
         priorityButton.addEventListener('click', togglePriorityModal)
-        document.addEventListener('click', cancelModal)
+
+        document.addEventListener('click', togglePriorityModal)
 
         resizeHandle.addEventListener('mousedown', (e) => mousedownResizeHandler(e, taskListPane, appContainer));
 
@@ -80,20 +71,38 @@ export default function View() {
         // })
     }
 
-    const cancelModal = function(e){
-        if(!e.target.closest('#task-input-container') &&
-
-            priorityModal.matches('.show')){
-            priorityModal.classList.remove('show')
-            document.getElementById('task-input-container').classList.remove('focused')
-            document.getElementById('priority-button').classList.remove('active-icon')
+    const toggleTodoContainerHighlights = function(input){
+        if(input.matches('#priority-button')){
+            input.addEventListener('click', () => {
+                priorityButton.classList.toggle('active-icon')
+            })
         }
-    }
 
+        input.addEventListener('focus', function() {
+
+            document.getElementById('task-input-container').classList.add('focused')
+            if(input.matches('#todo-date-input')){
+                document.getElementById('todo-date-icon').classList.add('active-icon')
+            }
+        })
+        input.addEventListener('focusout', function(){
+            document.getElementById('task-input-container').classList.remove('focused')
+            if(input.matches('#todo-date-input')){
+                document.getElementById('todo-date-icon').classList.remove('active-icon')
+            }
+        })
+    }
     const togglePriorityModal = function(e){
-        document.getElementById('task-input-container').classList.add('focused')
-        document.getElementById('priority-button').classList.add('active-icon')
-        priorityModal.classList.toggle('show')
+        if(!todoInputContainer.contains(e.target) && priorityModal.classList.contains('show')){
+            priorityModal.classList.toggle('show')
+            priorityButton.classList.remove('active-icon')
+            return
+        }
+        if(!todoInputContainer.contains(e.target) && !priorityModal.classList.contains('show')){
+            priorityButton.classList.add('active-icon')
+            priorityModal.classList.toggle('show')
+        }
+
     }
 
     this.renderProjectList = function(projectList) {
