@@ -2,6 +2,7 @@
 import {TodoListEntry} from "../components/TodoListEntry";
 import {mousedownResizeHandler} from "./resize";
 
+
 export default function View() {
 
     //get DOM elements
@@ -9,31 +10,36 @@ export default function View() {
     const todoMenu = document.getElementById('menu-todo-date');
     const taskListPane = document.getElementById("task-list");
     const detailPane = document.getElementById('detail-pane')
+
     const todoInputContainer = document.getElementById('task-input-container')
     const todoInput = document.getElementById("todo-input");
     const dateInput = document.getElementById('todo-date-input')
     const todoListElement = document.getElementById("todo-list");
+
     const projectListSidebar = document.getElementById('menu-todo-project');
     const projectControls = document.getElementById('new-project-controls')
     const addProjectBtn = document.getElementById('add-project-btn');
     const projectInput = document.getElementById('project-input')
     const projectListElement = document.getElementById('project-list');
+
     const priorityContainer = document.getElementById('priority-container')
     const priorityModal = document.getElementById('priority-modal')
     const priorityButton = document.getElementById('priority-button')
     const priorityToggle = document.getElementById('priority-container')
     const priorityItems = document.getElementsByClassName('priority-item')
+
     const allTodoInputs = document.getElementsByClassName('todo-input-control')
     const todoInputIcons = document.querySelectorAll('.todo-input-icon')
+
     const resizeHandle = document.getElementById('resize-handle')
     let projectClickHandler = null
 
     this.bindAddTodo = function(handler){
-        todoInput.addEventListener('keypress', function (event) {
-            if (event.key === "Enter" && this.value.toString().trim() !== "") {
+        document.addEventListener('keypress', function (event) {
+            if (todoInputContainer.classList.contains('focused') && event.key === "Enter" && todoInput.value.toString().trim() !== "") {
                 let date = dateInput.value ? new Date(dateInput.value) : null
-                handler(this.value, date);
-                this.value = "";
+                handler(todoInput.value, date, todoInput.getAttribute('data-priority'));
+                todoInput.value = "";
                 dateInput.value = ""
             }
         })
@@ -56,24 +62,18 @@ export default function View() {
         Array.from(allTodoInputs).forEach(input => {
             toggleTodoContainerHighlights(input);
         })
-
         document.addEventListener('click', togglePriorityModal)
-
         resizeHandle.addEventListener('mousedown', (e) => mousedownResizeHandler(e, taskListPane, appContainer));
 
-        // this.todoInput.addEventListener('keypress', function (event) {
-        //     if (event.key === "Enter" && this.todoInput.value.trim() !== "") {
-        //         addNewTodo(this.todoInput.value);
-        //         this.todoInput.value = "";
-        //     }
-        // })
+        Array.from(priorityItems).forEach( item => {
+            item.addEventListener('click', setTodoPriority)
+        })
     }
 
     const toggleTodoContainerHighlights = function(input){
         if(input.matches('#priority-button')){
 
             input.addEventListener('click', () => {
-                priorityButton.classList.add('active-icon')
                 todoInputContainer.classList.add('focused')
             })
 
@@ -85,12 +85,14 @@ export default function View() {
             todoInputContainer.classList.add('focused')
             if(input.matches('#todo-date-input')){
                 document.getElementById('todo-date-icon').classList.add('active-icon')
+                priorityButton.classList.remove('active-icon')
             }
         })
         input.addEventListener('focusout', function(){
             todoInputContainer.classList.remove('focused')
             if(input.matches('#todo-date-input')){
                 document.getElementById('todo-date-icon').classList.remove('active-icon')
+                priorityButton.classList.remove('active-icon')
             }
         })
 
@@ -101,6 +103,7 @@ export default function View() {
             }
         })
     }
+
     const togglePriorityModal = function(e){
         e.stopPropagation();
         if(this !== priorityButton){
@@ -111,7 +114,15 @@ export default function View() {
         }
     }
 
-    this.renderProjectList = function(projectList) {
+    const setTodoPriority = function(){
+        priorityButton.classList.remove(`priority-${todoInput.getAttribute('data-priority')}`)
+        todoInput.setAttribute('data-priority', this.getAttribute('data-priority'))
+        priorityButton.classList.add(`priority-${todoInput.getAttribute('data-priority')}`)
+
+
+    }
+
+    this.renderProjectList = (projectList) => {
         projectListElement.innerHTML = ""
         for (let i = 0; i < projectList.length; i++) {
             let item = document.createElement('li');
@@ -132,16 +143,31 @@ export default function View() {
         projectClickHandler = handler;
     }
 
-    this.renderTodoList = function(list) {
+    this.renderTodoList = (list) => {
         todoListElement.innerHTML = ""
         for (let i = 0; i < list.length; i++) {
             const item = TodoListEntry(list[i]);
             todoListElement.appendChild(item)
         }
+        renderTodoDetails(list[list.length - 1])
     }
 
     this.changeActiveProject = function(e, handler){
         let projectId = e.target
+    }
+
+    const renderTodoDetails = function(todo){
+        const todoTitle = document.getElementById('todo-title')
+        const todoDate = document.getElementById('todo-date')
+        const todoPriority = document.getElementById('todo-priority')
+        const todoDescription = document.getElementById('todo-description')
+        console.log(todo.dueDate)
+        todoTitle.innerHTML = todo.title
+        todoDate.innerHTML = todo.dueDate
+        todoPriority.innerHTML = todo.priority
+        todoDescription.innerHTML = todo.description === undefined ? '' : todo.description
+        console.log(todoTitle)
+        console.log(todoTitle.innerHTML)
     }
 }
 

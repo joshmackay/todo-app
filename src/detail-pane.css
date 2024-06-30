@@ -1,8 +1,46 @@
 #detail-pane{
     background-color: rgb(30,30,30);
     display: flex;
+    flex-direction: column;
     flex: 1 1 auto;
-    min-width: 16rem;
+    gap: 1rem;
+    min-width: 30rem;
     border-left: 1px solid rgba(255,255,255,0.1);
-    min-width: 20rem;
+}
+
+#todo-controls{
+    display: flex;
+    justify-content: space-between;
+    flex: 0 1 0;
+    align-content: center;
+}
+
+#todo-title{
+    margin: 0;
+    width: max-content;
+    align-content: center;
+}
+
+#todo-buttons{
+    max-width: 180px;
+    display: flex;
+    flex: 1;
+    gap: 1rem;
+}
+
+#delete-button{
+
+}
+
+#edit-button{
+
+}
+
+.todo-button{
+    background-color: transparent;
+    border: 1px solid darkorange;
+    padding: 0.5rem 0.8rem;
+    border-radius: 5px;
+    flex: 1;
+    cursor: pointer;
 }

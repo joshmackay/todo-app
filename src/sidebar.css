@@ -1,7 +1,6 @@
-.sidebar{
+#sidebar{
     background-color: #171717;
     min-width: 16rem;
-    padding: 1.5rem;
 }
 
 .sidebar-inner-container{

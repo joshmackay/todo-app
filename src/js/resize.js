@@ -8,13 +8,14 @@ let isMouseDown = false;
 export function mousedownResizeHandler(e, taskListPane, appContainer){
     //get current mouse position
     isMouseDown = true;
-    if(e.target.closest('#resize-handle') == false) {
+    if(e.target.closest('#resize-handle') === false) {
         isMouseDown = false;
         return
     }
     mousePosXResizer = e.clientX;
     mousePosYResizer = e.clientY;
     taskListContainerWidth = taskListPane.getBoundingClientRect().width;
+    document.body.classList.add('no-select')
     document.addEventListener('mousemove', (e) => mouseResizeMoveHandler(e, taskListPane, appContainer));
     document.addEventListener('mouseup', mouseUpResizeHandler)
 }
@@ -28,6 +29,7 @@ function mouseResizeMoveHandler(e, taskListPane, appContainer){
 }
 
 function mouseUpResizeHandler(e){
+    document.body.classList.remove('no-select')
     document.removeEventListener('mousemove', mouseResizeMoveHandler)
     document.removeEventListener('mouseup', mouseUpResizeHandler)
     isMouseDown = false;

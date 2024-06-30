@@ -18,7 +18,7 @@
 }
 
 #list-name{
-    font-size: 1.5rem;
+
 
 }
 
@@ -148,16 +148,20 @@
     margin-right: 0.5rem;
 }
 
-.priority-high i{
+.priority-high i, #priority-button.priority-high{
     color: red;
 }
 
-.priority-medium i{
+.priority-medium i, #priority-button.priority-medium{
     color: orange;
 }
 
-.priority-low i{
+.priority-low i, #priority-button.priority-low{
     color: yellow;
+}
+
+.priority-none i, #priority-button.priority-none{
+
 }
 
 .active-icon{

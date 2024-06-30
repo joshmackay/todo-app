@@ -13,10 +13,10 @@
 </head>
 <body>
 <div id="app-container" class="">
-    <div class="sidebar">
+    <div id="sidebar" class="section-container">
         <div class="sidebar-inner-container">
             <div id="menu-todo-date" class="menu-by-date">
-                <span class="menu-header">Todo</span>
+                <span class="section-header">Todo</span>
             </div>
             <div id="menu-todo-projects" class="menu-by-project">
                 <span class="menu-header mb-4">Projects<i id="add-project-btn" class="ph ph-plus"></i></span>
@@ -32,25 +32,26 @@
         </div>
     </div>
 
-    <div id="task-list" class="">
+    <div id="task-list" class="section-container">
 
         <div class="task-list-view-options">
-                <span id="list-name" class="">Inbox</span>
+            <span id="" class="section-header">Inbox</span>
         </div>
 
         <div id="task-input-container" class="">
-            <input id="todo-input" class="todo-input todo-input-control" type="text" placeholder="Add Task"/>
+            <input id="todo-input" class="todo-input todo-input-control" type="text" placeholder="Add Task" data-priority="none" />
             <div id="date-picker-toggle" class="">
                 <i id="todo-date-icon" class="ph-thin ph-calendar  todo-input-icon"></i>
                 <input id="todo-date-input" class="todo-input todo-input-control" type="date"  />
             </div>
             <div id="priority-container">
-                <i id="priority-button" class="ph-thin ph-caret-down todo-input-icon todo-input-control"></i>
+                <i id="priority-button" class="ph-thin ph-flag-pennant todo-input-icon todo-input-control"></i>
                 <div id="priority-modal" class="">
                     <ul>
-                        <li class="priority-item priority-high"><i class="ph-fill ph-flag"></i>High</li>
-                        <li class="priority-item priority-medium"><i class="ph-fill ph-flag"></i>Medium</li>
-                        <li class="priority-item priority-low"><i class="ph-fill ph-flag"></i>Low</li>
+                        <li class="priority-item priority-high" data-priority="high"><i class="ph-fill ph-flag-pennant"></i>High</li>
+                        <li class="priority-item priority-medium" data-priority="medium"><i class="ph-fill ph-flag-pennant"></i>Medium</li>
+                        <li class="priority-item priority-low" data-priority="low"><i class="ph-fill ph-flag-pennant"></i>Low</li>
+                        <li class="priority-item priority-none" data-priority="none"><i class="ph-fill ph-flag-pennant"></i>None</li>
                     </ul>
                 </div>
             </div>
@@ -64,7 +65,21 @@
 
     <div id="resize-handle" class="" ></div>
 
-    <div id="detail-pane" class="task-details">
+    <div id="detail-pane" class="task-details section-container">
+        <div id="todo-controls">
+            <span id="todo-title" class="section-header"></span>
+            <div id="todo-buttons">
+                <button id="delete-button" class="todo-button">Delete</button>
+                <button id="edit-button" class="todo-button">Edit</button>
+            </div>
+        </div>
+        <div>Due date: <span id="todo-date"></span></div>
+        <div>Priority: <span id="todo-priority"></span></div>
+        <div>
+            <p>Description</p>
+            <p id="todo-description"></p>
+        </div>
+
 
     </div>
 </div>

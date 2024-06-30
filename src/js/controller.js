@@ -33,7 +33,7 @@ export default function Controller() {
         this.view.setEventListeners();
         //this.selectedProject = this.projects.getAllProjects()[0]
         this.view.renderProjectList(this.projects.getAllProjects())
-
+        console.log('first render')
         this.view.renderTodoList(this.selectedProject.todoList)
 
         //const sortable = createSortable(todoListElement);
@@ -68,12 +68,12 @@ Controller.prototype.getProjects = function(){
     this.setActiveProject(this.projects.getAllProjects()[0].id)
 }
 
-Controller.prototype.handleAddNewTodo = function(todoName, todoDate){
-    let newTodo = new Todo(todoName, 0, this.selectedProject.id, todoDate ? formatISO(todoDate) : null)
-    console.log(newTodo.toJSON())
+Controller.prototype.handleAddNewTodo = function(todoName, todoDate, todoPriority = null){
+    let newTodo = new Todo(todoName, 0, this.selectedProject.id, todoDate ? formatISO(todoDate) : null, todoPriority)
     this.selectedProject.addTodo(newTodo)
     this.view.renderTodoList(this.selectedProject.todoList)
     addToLocalStorage(this.projects)
+    console.log(this.selectedProject.todoList)
 }
 
 Controller.prototype.handleAddNewProject = function(project) {
