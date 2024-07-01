@@ -31,6 +31,9 @@ export default function View() {
     const allTodoInputs = document.getElementsByClassName('todo-input-control')
     const todoInputIcons = document.querySelectorAll('.todo-input-icon')
 
+    const deleteButton = document.getElementById('delete-button')
+    const editButton = document.getElementById('edit-button')
+
     const resizeHandle = document.getElementById('resize-handle')
     let projectClickHandler = null
 
@@ -118,8 +121,6 @@ export default function View() {
         priorityButton.classList.remove(`priority-${todoInput.getAttribute('data-priority')}`)
         todoInput.setAttribute('data-priority', this.getAttribute('data-priority'))
         priorityButton.classList.add(`priority-${todoInput.getAttribute('data-priority')}`)
-
-
     }
 
     this.renderProjectList = (projectList) => {
@@ -149,25 +150,31 @@ export default function View() {
             const item = TodoListEntry(list[i]);
             todoListElement.appendChild(item)
         }
-        renderTodoDetails(list[list.length - 1])
+
     }
 
     this.changeActiveProject = function(e, handler){
         let projectId = e.target
     }
 
-    const renderTodoDetails = function(todo){
-        const todoTitle = document.getElementById('todo-title')
-        const todoDate = document.getElementById('todo-date')
-        const todoPriority = document.getElementById('todo-priority')
-        const todoDescription = document.getElementById('todo-description')
-        console.log(todo.dueDate)
-        todoTitle.innerHTML = todo.title
-        todoDate.innerHTML = todo.dueDate
-        todoPriority.innerHTML = todo.priority
-        todoDescription.innerHTML = todo.description === undefined ? '' : todo.description
-        console.log(todoTitle)
-        console.log(todoTitle.innerHTML)
+    this.renderTodoDetails = function(todo = null){
+        console.log(todo)
+        if(todo !== null) {
+            console.log(todo)
+            const todoTitle = document.getElementById('todo-title')
+            const todoDate = document.getElementById('todo-date')
+            const todoPriority = document.getElementById('todo-priority')
+            const todoDescription = document.getElementById('todo-description')
+            todoTitle.innerHTML = todo.title
+            todoDate.innerHTML = todo.dueDate
+            todoPriority.innerHTML = todo.priority
+            todoDescription.innerHTML = todo.description === undefined ? '' : todo.description
+        }
+    }
+
+
+    this.deleteSelectedTodo = function(handler){
+        deleteButton.addEventListener('click', handler)
     }
 }
 

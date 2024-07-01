@@ -24,12 +24,20 @@ export default function Project(name, id = null){
         },
     })
 
+    this.getTodo = function(Todo){
+        if(Todo !== null)
+            return _todoList.find(todo => todo === Todo)
+        else
+            return _todoList[0]
+    }
+
     this.addTodo = function (todo){
         _todoList.push(todo)
     }
 
     this.deleteTodo = function(toDelete){
-        _todoList = _todoList.filter(todo => todo != toDelete)
+        console.log(toDelete)
+        _todoList = _todoList.filter(todo => todo.id !== toDelete.id)
     }
 
     this.toJSON = function(){

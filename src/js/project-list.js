@@ -16,10 +16,6 @@ export default function ProjectList() {
         _projects.push(project);
     }
 
-    this.addRange = (projectList) => {
-        projectList.forEach(project => this.addProject(project))
-    }
-
     this.removeProject = (toRemove) => {
         _projects = _projects.filter(project => project.id !== toRemove.id);
     }
@@ -27,10 +23,6 @@ export default function ProjectList() {
     this.updateProject = (project) => {
         const listIndex = _projects.indexOf(project);
         _projects[listIndex] = project;
-    }
-
-    this.addTodo = (project, title) => {
-        _projects.find(item => item.id === project.id).todoList.push(new Todo(title));
     }
 
     this.toJSON = function(){
