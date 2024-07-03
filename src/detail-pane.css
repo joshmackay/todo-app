@@ -36,6 +36,10 @@
 
 }
 
+#todo-description{
+    text-wrap: balance;
+}
+
 .todo-button{
     background-color: transparent;
     border: 1px solid darkorange;

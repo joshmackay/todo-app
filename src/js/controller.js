@@ -6,7 +6,7 @@ import { createSortable } from "./sortbable";
 import {ProjectInput} from "../components/newProjectInput";
 import View from "./view";
 import Project from "./Project";
-import { formatISO } from "date-fns";
+import { format } from "date-fns";
 
 
 export default function Controller() {
@@ -63,7 +63,8 @@ Controller.prototype.getProjects = function(){
                 todo.id,
                 project.id,
                 todo.dueDate,
-                todo.priority))
+                todo.priority,
+                todo.description))
         })
         this.projects.addProject(newProject)
     })
@@ -71,7 +72,7 @@ Controller.prototype.getProjects = function(){
 }
 
 Controller.prototype.handleAddNewTodo = function(todoName, todoDate, todoPriority = null){
-    let newTodo = new Todo(todoName, 0, this.selectedProject.id, todoDate ? formatISO(todoDate) : null, todoPriority)
+    let newTodo = new Todo(todoName, 0, this.selectedProject.id, todoDate ? format(todoDate, 'dd/MM/yyy') : null, todoPriority)
     this.selectedProject.addTodo(newTodo)
     this.view.renderTodoList(this.selectedProject.todoList)
     addToLocalStorage(this.projects)
@@ -92,24 +93,22 @@ Controller.prototype.setActiveProject = function(projectId = null) {
     }
     this.selectedProject = this.projects.getProject(projectId)
     this.view.renderTodoList(this.selectedProject.todoList)
-    this.setActiveTodo()
+    this.setActiveTodo(this.selectedProject.getFirstTodo().id)
 }
 
 Controller.prototype.setActiveTodo = function(todoId = null){
     if(todoId == null){
         return
     }
+    console.log('in')
     this.selectedTodo = this.selectedProject.getTodo(todoId);
     this.view.renderTodoDetails(this.selectedTodo)
 }
 
 Controller.prototype.deleteTodoHandler = function(){
-
-    console.log(this.selectedProject.todoList)
     this.selectedProject.deleteTodo(this.selectedTodo)
     addToLocalStorage(this.projects)
-
     this.view.renderTodoList(this.selectedProject.todoList)
-    this.setActiveTodo()
+    this.setActiveTodo(this.selectedProject.getFirstTodo().id)
     this.view.renderTodoDetails(this.selectedTodo)
 }

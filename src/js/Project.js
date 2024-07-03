@@ -31,6 +31,10 @@ export default function Project(name, id = null){
             return _todoList[0]
     }
 
+    this.getFirstTodo = function(){
+        return _todoList.length > 0 ? _todoList[0] : null
+    }
+
     this.addTodo = function (todo){
         _todoList.push(todo)
     }

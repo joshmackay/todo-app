@@ -1,10 +1,10 @@
-export function Todo(title, id = 0, projectId, dueDate, priority) {
+export function Todo(title, id = 0, projectId, dueDate, priority, description = "") {
     let _title = title
     let _id = id === 0 ? Date.now().toString(36) + Math.random().toString(36) : id
     let _projectId = projectId
     let _dueDate = dueDate
     let _priority = priority
-    let _description
+    let _description = description
 
     this.toJSON = function(){
         return{

@@ -1,7 +1,7 @@
 
 import {TodoListEntry} from "../components/TodoListEntry";
 import {mousedownResizeHandler} from "./resize";
-
+import { format } from "date-fns"
 
 export default function View() {
 
@@ -72,6 +72,8 @@ export default function View() {
         Array.from(priorityItems).forEach( item => {
             item.addEventListener('click', setTodoPriority)
         })
+
+        editButton.addEventListener('click', showEditModal)
     }
 
     const toggleTodoContainerHighlights = function(input){
@@ -170,15 +172,19 @@ export default function View() {
             const todoPriority = document.getElementById('todo-priority')
             const todoDescription = document.getElementById('todo-description')
             todoTitle.innerHTML = todo.title
-            todoDate.innerHTML = todo.dueDate
+            todoDate.innerHTML =  todo.dueDate
             todoPriority.innerHTML = todo.priority
-            todoDescription.innerHTML = todo.description === undefined ? '' : todo.description
+            todoDescription.innerHTML = todo.description
         }
     }
 
 
     this.deleteSelectedTodo = function(handler){
         deleteButton.addEventListener('click', handler)
+    }
+
+    const showEditModal = function(){
+        document.getElementById('modal-blur').classList.add('show');
     }
 }
 

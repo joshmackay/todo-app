@@ -33,65 +33,92 @@ export default function ProjectList() {
 
 export const defaultLists = [
     {
-        'name': 'Personal',
-        'id': '1',
-        'todoList': [
+        "name": "Personal",
+        "id": "1",
+        "todoList": [
             {
-                title: 'Get groceries',
-                id: '1',
-                projectId: 1
+                "title": "Yoga Session",
+                "id": "1",
+                "projectId": 1,
+                "dueDate": "04/07/2024",
+                "priority": "medium",
+                "description": "Attend a 1-hour yoga session at the local studio to relax and unwind."
             },
             {
-                title: 'Vaccuum',
-                id: '2',
-                projectId: 1
+                "title": "Bake a Cake",
+                "id": "2",
+                "projectId": 1,
+                "dueDate": "05/07/2024",
+                "priority": "low",
+                "description": "Bake a chocolate cake for the family gathering this weekend."
             },
             {
-                title: 'Call mum',
-                id: '3',
-                projectId: 1
+                "title": "Call Aunt Lisa",
+                "id": "3",
+                "projectId": 1,
+                "dueDate": "08/07/2024",
+                "priority": "high",
+                "description": "Catch up with Aunt Lisa to discuss holiday plans and family updates."
             }
         ]
     },
     {
-        'name': 'Work',
-        'id': '2',
-        'todoList': [
+        "name": "Work",
+        "id": "2",
+        "todoList": [
             {
-                title: 'Call Bill',
-                id: '4',
-                projectId: 2
+                "title": "Client Proposal",
+                "id": "4",
+                "projectId": 2,
+                "dueDate": "04/07/2024",
+                "priority": "high",
+                "description": "Draft and send the proposal to the new client for the upcoming project."
             },
             {
-                title: 'Pay rent',
-                id: '5',
-                projectId: 2
+                "title": "Team Meeting",
+                "id": "5",
+                "projectId": 2,
+                "dueDate": "12/07/2024",
+                "priority": "medium",
+                "description": "Schedule and attend the weekly team meeting to discuss project progress."
             },
             {
-                title: 'Get money',
-                id: '6',
-                projectId: 2
+                "title": "Code Review",
+                "id": "6",
+                "projectId": 2,
+                "dueDate": "21/07/2024",
+                "priority": "low",
+                "description": "Review the latest code commits and provide feedback to the development team."
             }
         ]
     },
     {
-        'name': 'Play',
-        'id': '3',
-        'todoList': [
+        "name": "Leisure",
+        "id": "3",
+        "todoList": [
             {
-                title: 'Something',
-                id: '7',
-                projectId: 3
+                "title": "Hiking Adventure",
+                "id": "7",
+                "projectId": 3,
+                "dueDate": "04/12/2024",
+                "priority": "high",
+                "description": "Plan and embark on a hiking trip to the nearby mountains for a day of exploration."
             },
             {
-                title: 'Something2',
-                id: '8',
-                projectId: 3
+                "title": "Board Game Night",
+                "id": "8",
+                "projectId": 3,
+                "dueDate": "04/12/2024",
+                "priority": "medium",
+                "description": "Organize a board game night with friends and family, featuring your favorite games."
             },
             {
-                title: 'Something3',
-                id: '9',
-                projectId: 3
+                "title": "Movie Marathon",
+                "id": "9",
+                "projectId": 3,
+                "dueDate": "04/12/2024",
+                "priority": "none",
+                "description": "Plan a movie marathon with a selection of classic and new films to enjoy over the weekend."
             }
         ]
     }

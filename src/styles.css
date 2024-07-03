@@ -15,6 +15,10 @@
     margin: 0;
 }
 
+body{
+    position: relative;
+}
+
 .section-container{
     padding: 1.5rem;
 }
@@ -27,7 +31,7 @@
     user-select: none;
 }
 
-input, button, textarea, select {
+input, button, textarea, select, body {
     font: inherit;
 }
 
@@ -72,7 +76,6 @@ p, h1, h2, h3, h4, h5, h6 {
 .my-handle:hover{
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-    -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -85,3 +88,54 @@ p, h1, h2, h3, h4, h5, h6 {
     background-color: rgb(30,30,30);
 }
 
+#modal-blur{
+    display: none;
+    background: transparent;
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(10px) !important;
+}
+
+#edit-modal{
+    width: 500px;
+    z-index: 10;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border: 1px solid orange;
+    background-color: rgb(30,30,30);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+
+#edit-modal label{
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 1.3rem;
+    font-weight: 300;
+}
+
+#edit-modal input, #edit-modal select, #edit-modal textarea{
+    background-color: rgba(255,255,255,0.03);
+    border: 1px solid rgb(255,255,255,0.06);
+    width: 100%;
+    border-radius: 8px;
+    font-size: 1.3rem;
+}
+
+#description-input{
+    min-height: 200px;
+}
+
+.show{
+    display: block !important;
+}
