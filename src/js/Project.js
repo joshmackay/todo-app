@@ -24,9 +24,9 @@ export default function Project(name, id = null){
         },
     })
 
-    this.getTodo = function(Todo){
-        if(Todo !== null)
-            return _todoList.find(todo => todo === Todo)
+    this.getTodo = function(id){
+        if(id !== null)
+            return _todoList.find(todo => todo.id === id)
         else
             return _todoList[0]
     }

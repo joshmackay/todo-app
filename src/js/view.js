@@ -36,6 +36,7 @@ export default function View() {
 
     const resizeHandle = document.getElementById('resize-handle')
     let projectClickHandler = null
+    let selectTodoHandler = null
 
     this.bindAddTodo = function(handler){
         document.addEventListener('keypress', function (event) {
@@ -148,6 +149,7 @@ export default function View() {
         todoListElement.innerHTML = ""
         for (let i = 0; i < list.length; i++) {
             const item = TodoListEntry(list[i]);
+            item.addEventListener('click', () => selectTodoHandler(list[i].id) )
             todoListElement.appendChild(item)
         }
 
@@ -157,10 +159,12 @@ export default function View() {
         let projectId = e.target
     }
 
+    this.selectTodoHandler = function(handler){
+        selectTodoHandler = handler
+    }
+
     this.renderTodoDetails = function(todo = null){
-        console.log(todo)
         if(todo !== null) {
-            console.log(todo)
             const todoTitle = document.getElementById('todo-title')
             const todoDate = document.getElementById('todo-date')
             const todoPriority = document.getElementById('todo-priority')

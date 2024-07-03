@@ -20,20 +20,24 @@ export default function Controller() {
     this.handleAddNewTodo = this.handleAddNewTodo.bind(this)
     this.view.bindAddTodo(this.handleAddNewTodo)
 
+    this.setActiveTodo = this.setActiveTodo.bind(this)
+    this.view.selectTodoHandler(this.setActiveTodo)
+
     this.handleAddNewProject = this.handleAddNewProject.bind(this)
     this.view.bindAddProject(this.handleAddNewProject)
 
     this.view.bindProjectClickHandler(this.setActiveProject.bind(this))
-
-    this.handleAddNewProject = this.handleAddNewProject.bind(this)
 
     this.deleteTodoHandler = this.deleteTodoHandler.bind(this)
     this.view.deleteSelectedTodo(this.deleteTodoHandler)
 
     this.initialise = () => {
         this.getProjects()
-        this.selectedProject = this.projects.getAllProjects()[0]
-        this.selectedTodo = this.setActiveTodo()
+        if(this.projects.length === 0) return
+
+        this.setActiveProject()
+        console.log(this.selectedProject)
+        this.setActiveTodo()
         this.view.setEventListeners();
         //this.selectedProject = this.projects.getAllProjects()[0]
         this.view.renderProjectList(this.projects.getAllProjects())
@@ -81,14 +85,21 @@ Controller.prototype.handleAddNewProject = function(project) {
     addToLocalStorage(this.projects)
 }
 
-Controller.prototype.setActiveProject = function(projectId) {
+Controller.prototype.setActiveProject = function(projectId = null) {
+    if(projectId === null){
+        this.selectedProject = this.projects.getAllProjects()[0]
+        return
+    }
     this.selectedProject = this.projects.getProject(projectId)
     this.view.renderTodoList(this.selectedProject.todoList)
     this.setActiveTodo()
 }
 
-Controller.prototype.setActiveTodo = function(todo = null){
-    this.selectedTodo = this.selectedProject.getTodo(todo);
+Controller.prototype.setActiveTodo = function(todoId = null){
+    if(todoId == null){
+        return
+    }
+    this.selectedTodo = this.selectedProject.getTodo(todoId);
     this.view.renderTodoDetails(this.selectedTodo)
 }
 
