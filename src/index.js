@@ -6,7 +6,6 @@ import "./sidebar.css"
 import "./todo.css"
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("in again")
     const controller = new Controller()
     controller.initialise();
 })

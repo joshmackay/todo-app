@@ -4,14 +4,15 @@ import Sortable from "sortablejs";
 let todoListContainer = null;
 let draggableItem = null;
 
-export function createSortable(element) {
+export function createSortable(project, element) {
+    console.log(project.id, element)
     return new Sortable.create(element, {
         draggable: '.todo-item',
         sort: true,
         handle: '.my-handle',
         forceFallback: true,
         fallbackOnBody: true,
-        group: 'order',
+        group: `sortable-${project.id}`,
         dataIdAttr: 'data-id',
         store: {
             get: function (sortableList) {
