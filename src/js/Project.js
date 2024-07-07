@@ -32,6 +32,7 @@ export default function Project(name, id = null){
     }
 
     this.getFirstTodo = function(){
+        console.log(_todoList.length)
         return _todoList.length > 0 ? _todoList[0] : null
     }
 

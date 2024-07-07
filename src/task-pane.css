@@ -1,4 +1,6 @@
-
+#task-pane-header{
+    margin: 0;
+}
 
 #task-list{
     display: flex;

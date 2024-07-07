@@ -31,6 +31,10 @@ export default function Controller() {
     this.deleteTodoHandler = this.deleteTodoHandler.bind(this)
     this.view.deleteSelectedTodo(this.deleteTodoHandler)
 
+    this.view.bindEditTodo(this.handleEditTodo.bind(this))
+
+    this.view.bindDeleteProject(this.handleDeleteProject.bind(this))
+
     this.initialise = () => {
         this.getProjects()
         if(this.projects.length === 0) return
@@ -93,15 +97,16 @@ Controller.prototype.setActiveProject = function(projectId = null) {
     }
     this.selectedProject = this.projects.getProject(projectId)
     this.view.renderTodoList(this.selectedProject.todoList)
-    this.setActiveTodo(this.selectedProject.getFirstTodo().id)
+    this.setActiveTodo(this.selectedProject.getFirstTodo())
 }
 
-Controller.prototype.setActiveTodo = function(todoId = null){
-    if(todoId == null){
+Controller.prototype.setActiveTodo = function(todo = null){
+    console.log(todo)
+    if(todo == null){
+        this.view.renderTodoDetails()
         return
     }
-    console.log('in')
-    this.selectedTodo = this.selectedProject.getTodo(todoId);
+    this.selectedTodo = this.selectedProject.getTodo(todo.id);
     this.view.renderTodoDetails(this.selectedTodo)
 }
 
@@ -111,4 +116,21 @@ Controller.prototype.deleteTodoHandler = function(){
     this.view.renderTodoList(this.selectedProject.todoList)
     this.setActiveTodo(this.selectedProject.getFirstTodo().id)
     this.view.renderTodoDetails(this.selectedTodo)
+}
+
+Controller.prototype.handleEditTodo = function(title, todoDate , priority, description){
+    this.selectedTodo.title = title
+    this.selectedTodo.dueDate = todoDate ? format(todoDate, 'dd/MM/yyy') : null
+    this.selectedTodo.priority = priority
+    this.selectedTodo.description = description
+    this.view.renderTodoDetails(this.selectedTodo)
+    this.view.toggleEditModal()
+}
+
+Controller.prototype.handleDeleteProject = function(){
+    this.projects.removeProject(this.selectedProject)
+    addToLocalStorage(this.projects)
+    this.setActiveProject()
+    this.view.renderProjectList(this.projects.getAllProjects())
+    this.view.renderTodoList(this.selectedProject.todoList)
 }

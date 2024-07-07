@@ -1,7 +1,7 @@
 
 import {TodoListEntry} from "../components/TodoListEntry";
 import {mousedownResizeHandler} from "./resize";
-import { format } from "date-fns"
+import {format, formatISO} from "date-fns"
 
 export default function View() {
 
@@ -16,11 +16,15 @@ export default function View() {
     const dateInput = document.getElementById('todo-date-input')
     const todoListElement = document.getElementById("todo-list");
 
+    const menuPrioritySelect = document.getElementsByClassName('menu-priority-item')
     const projectListSidebar = document.getElementById('menu-todo-project');
     const projectControls = document.getElementById('new-project-controls')
     const addProjectBtn = document.getElementById('add-project-btn');
     const projectInput = document.getElementById('project-input')
     const projectListElement = document.getElementById('project-list');
+    const saveNewProjectBtn = document.getElementById('new-project-add')
+    const cancelNewProjectBtn = document.getElementById('new-project-cancel')
+    const deleteProject = document.getElementById('delete-project-button')
 
     const priorityContainer = document.getElementById('priority-container')
     const priorityModal = document.getElementById('priority-modal')
@@ -31,8 +35,22 @@ export default function View() {
     const allTodoInputs = document.getElementsByClassName('todo-input-control')
     const todoInputIcons = document.querySelectorAll('.todo-input-icon')
 
+    const detailTitle = document.getElementById('todo-title')
+    const detailDate = document.getElementById('todo-date')
+    const detailPriority = document.getElementById('todo-priority')
+    const detailDescription = document.getElementById('todo-description')
     const deleteButton = document.getElementById('delete-button')
     const editButton = document.getElementById('edit-button')
+
+    const modal = document.getElementById('modal')
+    const editModal = document.getElementById('edit-modal')
+    const editSave = document.getElementById('edit-save')
+    const editCancel = document.getElementById('edit-cancel')
+
+    const modalTitleInput = document.getElementById('name-input')
+    const modalDateInput = document.getElementById('date-input')
+    const modalPriorityInput = document.getElementById('priority-input')
+    const modalDescriptionInput = document.getElementById('description-input')
 
     const resizeHandle = document.getElementById('resize-handle')
     let projectClickHandler = null
@@ -53,12 +71,16 @@ export default function View() {
         addProjectBtn.addEventListener('click', (event) => {
             projectControls.classList.remove('hidden')
         });
-        projectInput.addEventListener('keypress', (event) => {
-            if(event.key === "Enter" && projectInput.value.toString().trim() !== ""){
-                handler(this.value);
-                this.value = "";
-                this.classList.add('hidden')
+        saveNewProjectBtn.addEventListener('click', (event) => {
+            if(projectInput.value.toString().trim() !== ""){
+                handler(projectInput.value);
+                projectInput.value = "";
+                projectControls.classList.add('hidden')
             }
+        })
+        cancelNewProjectBtn.addEventListener('click', event => {
+            projectInput.value = "";
+            projectControls.classList.add('hidden')
         })
     }
 
@@ -73,7 +95,9 @@ export default function View() {
             item.addEventListener('click', setTodoPriority)
         })
 
-        editButton.addEventListener('click', showEditModal)
+        editButton.addEventListener('click', this.toggleEditModal)
+        editCancel.addEventListener('click', this.toggleEditModal)
+
     }
 
     const toggleTodoContainerHighlights = function(input){
@@ -151,14 +175,10 @@ export default function View() {
         todoListElement.innerHTML = ""
         for (let i = 0; i < list.length; i++) {
             const item = TodoListEntry(list[i]);
-            item.addEventListener('click', () => selectTodoHandler(list[i].id) )
+            item.addEventListener('click', () => selectTodoHandler(list[i]) )
             todoListElement.appendChild(item)
         }
 
-    }
-
-    this.changeActiveProject = function(e, handler){
-        let projectId = e.target
     }
 
     this.selectTodoHandler = function(handler){
@@ -167,14 +187,16 @@ export default function View() {
 
     this.renderTodoDetails = function(todo = null){
         if(todo !== null) {
-            const todoTitle = document.getElementById('todo-title')
-            const todoDate = document.getElementById('todo-date')
-            const todoPriority = document.getElementById('todo-priority')
-            const todoDescription = document.getElementById('todo-description')
-            todoTitle.innerHTML = todo.title
-            todoDate.innerHTML =  todo.dueDate
-            todoPriority.innerHTML = todo.priority
-            todoDescription.innerHTML = todo.description
+            detailTitle.innerHTML = todo.title
+            detailDate.innerHTML =  todo.dueDate
+            detailPriority.innerHTML = todo.priority
+            detailDescription.innerHTML = todo.description
+        }
+        else{
+            detailTitle.innerHTML = "Please add a new todo"
+            detailDate.innerHTML =  ""
+            detailPriority.innerHTML = ""
+            detailDescription.innerHTML = ""
         }
     }
 
@@ -183,8 +205,44 @@ export default function View() {
         deleteButton.addEventListener('click', handler)
     }
 
-    const showEditModal = function(){
-        document.getElementById('modal-blur').classList.add('show');
+    this.toggleEditModal = function(){
+        modal.classList.toggle('show')
+        if(modal.classList.contains('show'))
+            renderEditModal()
+    }
+
+    this.bindEditTodo = function(handler){
+        editSave.addEventListener('click', event => {
+            handler(modalTitleInput.value, modalDateInput.value, modalPriorityInput.value, modalDescriptionInput.value)
+        })
+    }
+
+    const renderEditModal = function(){
+        modalTitleInput.value = detailTitle.innerText
+        modalDateInput.value = formatDate(detailDate.innerText)
+        modalPriorityInput.value = detailPriority.innerText
+        modalDescriptionInput.value = detailDescription.innerText
+
+
+    }
+
+    this.bindDeleteProject = function(handler){
+        deleteProject.addEventListener('click', event =>{
+            handler();
+        })
+    }
+
+    const formatDate = function(date){
+        console.log(date)
+        let parts = date.split('/')
+        let day = parts[0]
+        let month = parts[1]
+        let year = parts[2]
+
+        if(day.length === 1) day ='0' + day;
+        if(month.length === 1) month = '0' + month
+
+        return `${year}-${month}-${day}`
     }
 }
 

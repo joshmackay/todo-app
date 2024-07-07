@@ -13,19 +13,17 @@
 </head>
 <body>
 <div id="app-container" class="">
+
     <div id="sidebar" class="section-container">
         <div class="sidebar-inner-container">
-            <div id="menu-todo-date" class="menu-by-date">
-                <span class="section-header">Todo</span>
-            </div>
-            <div id="menu-todo-projects" class="menu-by-project">
-                <span class="menu-header mb-4">Projects<i id="add-project-btn" class="ph ph-plus"></i></span>
-                <ul id="project-list"></ul>
+            <div id="menu-todo-projects" class="menu-section">
+                <span class="menu-header mb-4"><span id="projects-menu-header-text">Projects</span><i id="add-project-btn" class="ph ph-plus"></i></span>
+                <ul id="project-list" class="sidebar-list"></ul>
                 <div id="new-project-controls" class="hidden">
                     <input type="text" id="project-input" class="" />
                     <div>
-                        <button id="new-project-add">Add</button>
-                        <button id="new-project-cancel">Cancel</button>
+                        <button id="new-project-add" class="button">Add</button>
+                        <button id="new-project-cancel" class="button">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -35,11 +33,12 @@
     <div id="task-list" class="section-container">
 
         <div class="task-list-view-options">
-            <span id="" class="section-header">Inbox</span>
+            <span id="task-pane-header" class="section-header">Inbox</span>
+            <button id="delete-project-button" class="button">Delete</button>
         </div>
 
         <div id="task-input-container" class="">
-            <input id="todo-input" class="todo-input todo-input-control" type="text" placeholder="Add Task" data-priority="none" />
+            <input id="todo-input" class="todo-input todo-input-control" type="text" placeholder="+ Press enter to add todo" data-priority="none" />
             <div id="date-picker-toggle" class="">
                 <i id="todo-date-icon" class="ph-thin ph-calendar  todo-input-icon"></i>
                 <input id="todo-date-input" class="todo-input todo-input-control" type="date"  />
@@ -66,13 +65,11 @@
     <div id="resize-handle" class="" ></div>
 
     <div id="detail-pane" class="task-details section-container">
-        <div id="todo-controls">
-            <span id="todo-title" class="section-header"></span>
-            <div id="todo-buttons">
-                <button id="delete-button" class="todo-button">Delete</button>
-                <button id="edit-button" class="todo-button">Edit</button>
-            </div>
+        <div id="todo-buttons">
+            <button id="delete-button" class="button">Delete</button>
+            <button id="edit-button" class="button">Edit</button>
         </div>
+        <span id="todo-title" class="section-header"></span>
         <div>Due date: <span id="todo-date"></span></div>
         <div>Priority: <span id="todo-priority"></span></div>
         <div>
@@ -83,7 +80,7 @@
 
     </div>
 </div>
-<div id="modal-blur">
+<div id="modal">
     <div id="edit-modal" class="">
         <div>
             <label for="name-input">Task</label>
@@ -108,8 +105,8 @@
         </div>
 
         <div>
-            <button id="modal-save">Save</button>
-            <button id="modal-cancel">Cancel</button>
+            <button id="edit-save" class="button">Save</button>
+            <button id="edit-cancel" class="button">Cancel</button>
         </div>
     </div>
 </div>
