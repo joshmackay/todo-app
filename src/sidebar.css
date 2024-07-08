@@ -1,6 +1,6 @@
 #sidebar{
     background-color: #171717;
-    min-width: 16rem;
+    max-width: 12rem;
 }
 
 .sidebar-inner-container{
