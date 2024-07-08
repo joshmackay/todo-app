@@ -8,11 +8,11 @@ import View from "./view";
 import {Project} from "./Project";
 import { format } from "date-fns";
 
-export default function Controller() {
+export default function Controller(view, projectList) {
 
 
-    this.view = new View();
-    this.projects = new ProjectList();
+    this.view = view;
+    this.projects = projectList;
     this.selectedProject = null;
     this.selectedTodo = null
     this.sortable = null
