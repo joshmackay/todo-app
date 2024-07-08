@@ -20,6 +20,7 @@ export function createSortable(project, element) {
                 return order ? order.split('|') : [];
             },
             set: function (sortableList) {
+                console.log(sortableList);
                 let order = sortableList.toArray();
                 localStorage.setItem(sortableList.options.group.name, order.join('|'));
             }

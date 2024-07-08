@@ -1,7 +1,6 @@
 import { Todo } from "./todo";
-import Project from "./project";
 
-export default function ProjectList() {
+export function ProjectList() {
     let _projects = []
 
     this.getAllProjects = () => {
