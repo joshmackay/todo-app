@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title></title>
+    <link href="./styles.css" rel="stylesheet">
+    <link href="./sidebar.css" rel="stylesheet">
+    <link href="./task-pane.css" rel="stylesheet">
+    <link href="./detail-pane.css" rel="stylesheet">
+    <link href="./todo.css" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+<script defer src="index.js"></script></head>
+<body>
+<div id="app-container" class="">
+
+    <div id="sidebar" class="section-container">
+        <div class="sidebar-inner-container">
+            <div id="menu-todo-projects" class="menu-section">
+                <span class="menu-header mb-4"><span id="projects-menu-header-text">Projects</span><i id="add-project-btn" class="ph ph-plus"></i></span>
+                <ul id="project-list" class="sidebar-list"></ul>
+                <div id="new-project-controls" class="hidden">
+                    <input type="text" id="project-input" class="" />
+                    <div>
+                        <button id="new-project-add" class="button">Add</button>
+                        <button id="new-project-cancel" class="button">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="task-list" class="section-container">
+
+        <div class="task-list-view-options">
+            <span id="task-pane-header" class="section-header">Inbox</span>
+            <button id="delete-project-button" class="button">Delete</button>
+        </div>
+
+        <div id="task-input-container" class="">
+            <input id="todo-input" class="todo-input todo-input-control" type="text" placeholder="+ Press enter to add todo" data-priority="none" />
+            <div id="date-picker-toggle" class="">
+                <i id="todo-date-icon" class="ph-thin ph-calendar  todo-input-icon"></i>
+                <input id="todo-date-input" class="todo-input todo-input-control" type="date"  />
+            </div>
+            <div id="priority-container">
+                <i id="priority-button" class="ph-thin ph-flag-pennant todo-input-icon todo-input-control"></i>
+                <div id="priority-modal" class="">
+                    <ul>
+                        <li class="priority-item priority-high" data-priority="high"><i class="ph-fill ph-flag-pennant"></i>High</li>
+                        <li class="priority-item priority-medium" data-priority="medium"><i class="ph-fill ph-flag-pennant"></i>Medium</li>
+                        <li class="priority-item priority-low" data-priority="low"><i class="ph-fill ph-flag-pennant"></i>Low</li>
+                        <li class="priority-item priority-none" data-priority="none"><i class="ph-fill ph-flag-pennant"></i>None</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="todo-list-container">
+            <ul id="todo-list" class=""></ul>
+        </div>
+
+    </div>
+
+    <div id="resize-handle" class="" ></div>
+
+    <div id="detail-pane" class="task-details section-container">
+        <div id="todo-buttons">
+            <button id="delete-button" class="button">Delete</button>
+            <button id="edit-button" class="button">Edit</button>
+        </div>
+        <span id="todo-title" class="section-header"></span>
+        <div>Due date: <span id="todo-date"></span></div>
+        <div>Priority: <span id="todo-priority"></span></div>
+        <div>
+            <p>Description:</p>
+            <p id="todo-description"></p>
+        </div>
+
+
+    </div>
+</div>
+<div id="modal">
+    <div id="edit-modal" class="">
+        <div>
+            <label for="name-input">Task</label>
+            <input id="name-input" type="text"  />
+        </div>
+        <div>
+            <label for="date-input">Due date</label>
+            <input id="date-input" type="date"/>
+        </div>
+        <div>
+            <label for="priority-input">Priority</label>
+            <select id="priority-input" type="se">
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+                <option value="none">None</option>
+            </select>
+        </div>
+        <div>
+            <label for="description-input">Description</label>
+            <textarea id="description-input" ></textarea>
+        </div>
+
+        <div>
+            <button id="edit-save" class="button">Save</button>
+            <button id="edit-cancel" class="button">Cancel</button>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
