@@ -3,6 +3,7 @@ import {TodoListEntry} from "../components/TodoListEntry";
 import {mousedownResizeHandler} from "./resize";
 import {format, formatISO} from "date-fns"
 
+
 export default function View() {
 
     //get DOM elements
@@ -171,12 +172,17 @@ export default function View() {
         projectClickHandler = handler;
     }
 
-    this.renderTodoList = (list) => {
-        todoListElement.innerHTML = ""
-        for (let i = 0; i < list.length; i++) {
-            const item = TodoListEntry(list[i]);
-            item.addEventListener('click', () => selectTodoHandler(list[i]) )
-            todoListElement.appendChild(item)
+    this.renderTodoList = (project) => {
+        todoListElement.setAttribute('data-projectId', project.id)
+        let listContainer = document.getElementById('todo-list-container')
+        listContainer.innerHTML = ""
+        let newList = document.createElement('ul')
+        newList.id = 'todo-list'
+        listContainer.appendChild(newList)
+        for (let i = 0; i < project.todoList.length; i++) {
+            const item = TodoListEntry(project.todoList[i]);
+            item.addEventListener('click', () => selectTodoHandler(project.todoList[i]) )
+            newList.appendChild(item)
         }
 
     }
@@ -243,6 +249,10 @@ export default function View() {
         if(month.length === 1) month = '0' + month
 
         return `${year}-${month}-${day}`
+    }
+
+    this.getTodoListElement = function(){
+        return document.getElementById('todo-list')
     }
 }
 

@@ -1,8 +1,8 @@
-export default function Project(name, id = null){
+export function Project(name, id = null){
     let _name = name
     let _id = id !== null ? id : Date.now().toString(36) + Math.random().toString(36);
     let _todoList = []
-
+    let _sortableId
     Object.defineProperties(this, {
         'name': {
             get: function () {
@@ -22,6 +22,14 @@ export default function Project(name, id = null){
                 return _todoList
             },
         },
+        'sortableId': {
+            get: function(){
+                return _sortableId
+            },
+            set: function(sortableId){
+                _sortableId = sortableId
+            }
+        }
     })
 
     this.getTodo = function(id){
@@ -32,7 +40,6 @@ export default function Project(name, id = null){
     }
 
     this.getFirstTodo = function(){
-        console.log(_todoList.length)
         return _todoList.length > 0 ? _todoList[0] : null
     }
 

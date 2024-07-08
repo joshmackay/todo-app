@@ -1,13 +1,12 @@
-import ProjectList, { defaultLists} from "./project-list";
+import {defaultLists, ProjectList} from "./project-list";
 import { Todo } from "./todo";
 import {addToLocalStorage, getProjectsFromLocalStorage} from "./local-storage";
 import { mousedownResizeHandler } from './resize'
-import { createSortable } from "./sortbable";
+import {createSortable, setSortableHandlers} from "./sortbable";
 import {ProjectInput} from "../components/newProjectInput";
 import View from "./view";
-import Project from "./Project";
+import {Project} from "./Project";
 import { format } from "date-fns";
-
 
 export default function Controller() {
 
@@ -16,6 +15,7 @@ export default function Controller() {
     this.projects = new ProjectList();
     this.selectedProject = null;
     this.selectedTodo = null
+    this.sortable = null
 
     this.handleAddNewTodo = this.handleAddNewTodo.bind(this)
     this.view.bindAddTodo(this.handleAddNewTodo)
@@ -40,24 +40,24 @@ export default function Controller() {
         if(this.projects.length === 0) return
 
         this.setActiveProject()
-        console.log(this.selectedProject)
         this.setActiveTodo()
+
         this.view.setEventListeners();
         //this.selectedProject = this.projects.getAllProjects()[0]
         this.view.renderProjectList(this.projects.getAllProjects())
 
-        this.view.renderTodoList(this.selectedProject.todoList)
+
 
         this.view.renderTodoDetails(this.selectedTodo)
-        //const sortable = createSortable(todoListElement);
-        //const sortOrder = sortable.options.store.get(sortable)
+
+
+
     }
 
 }
 
 Controller.prototype.getProjects = function(){
     let storageObj = getProjectsFromLocalStorage()
-    console.log(storageObj)
     if(storageObj === null) storageObj = defaultLists
     storageObj.forEach( project => {
         let newProject = new Project(project.name, project.id)
@@ -78,30 +78,39 @@ Controller.prototype.getProjects = function(){
 Controller.prototype.handleAddNewTodo = function(todoName, todoDate, todoPriority = null){
     let newTodo = new Todo(todoName, 0, this.selectedProject.id, todoDate ? format(todoDate, 'dd/MM/yyy') : null, todoPriority)
     this.selectedProject.addTodo(newTodo)
-    this.view.renderTodoList(this.selectedProject.todoList)
+    this.view.renderTodoList(this.selectedProject)
     addToLocalStorage(this.projects)
-    console.log(this.selectedProject.todoList)
+    this.sortable.destroy()
+    this.setSortable()
+
 }
 
 Controller.prototype.handleAddNewProject = function(project) {
     this.projects.addProject(new Project(project))
-    console.log(this.projects.getAllProjects())
-    this.view.renderProjectList(this.projects.getAllProjects());
+    this.view.renderProjectList(this.sortable);
     addToLocalStorage(this.projects)
 }
 
 Controller.prototype.setActiveProject = function(projectId = null) {
+    this.sortable = null
+
     if(projectId === null){
         this.selectedProject = this.projects.getAllProjects()[0]
         return
     }
+
     this.selectedProject = this.projects.getProject(projectId)
-    this.view.renderTodoList(this.selectedProject.todoList)
+    this.view.renderTodoList(this.selectedProject)
     this.setActiveTodo(this.selectedProject.getFirstTodo())
+    this.setSortable()
+    console.log(this.sortable)
+}
+
+Controller.prototype.setSortable = function() {
+    this.sortable = createSortable(this.selectedProject, this.view.getTodoListElement())
 }
 
 Controller.prototype.setActiveTodo = function(todo = null){
-    console.log(todo)
     if(todo == null){
         this.view.renderTodoDetails()
         return
@@ -113,7 +122,7 @@ Controller.prototype.setActiveTodo = function(todo = null){
 Controller.prototype.deleteTodoHandler = function(){
     this.selectedProject.deleteTodo(this.selectedTodo)
     addToLocalStorage(this.projects)
-    this.view.renderTodoList(this.selectedProject.todoList)
+    this.view.renderTodoList(this.selectedProject)
     this.setActiveTodo(this.selectedProject.getFirstTodo().id)
     this.view.renderTodoDetails(this.selectedTodo)
 }
@@ -132,5 +141,5 @@ Controller.prototype.handleDeleteProject = function(){
     addToLocalStorage(this.projects)
     this.setActiveProject()
     this.view.renderProjectList(this.projects.getAllProjects())
-    this.view.renderTodoList(this.selectedProject.todoList)
+    this.view.renderTodoList(this.selectedProject)
 }

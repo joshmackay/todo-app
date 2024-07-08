@@ -2,9 +2,9 @@
     background-color: rgb(30,30,30);
     display: flex;
     flex-direction: column;
-    flex: 1 1 auto;
     gap: 1rem;
-    min-width: 30rem;
+    flex: 1 0 auto;
+    min-width: 20rem;
     border-left: 1px solid rgba(255,255,255,0.1);
 }
 
@@ -37,7 +37,11 @@
 }
 
 #todo-description{
-    text-wrap: balance;
+    max-width: 100%;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    text-wrap: wrap;
 }
 
 .todo-button{

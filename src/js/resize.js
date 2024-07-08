@@ -4,7 +4,10 @@ let mousePosXResizer = 0;
 let mousePosYResizer = 0;
 let taskListContainerWidth = 0;
 let isMouseDown = false;
-
+let appWidth = document.getElementById('app-container').getBoundingClientRect().width
+let sideBarWidth = document.getElementById('sidebar').getBoundingClientRect().width
+let details = document.getElementById('detail-pane')
+let handleWidth = document.getElementById('resize-handle').getBoundingClientRect().width
 export function mousedownResizeHandler(e, taskListPane, appContainer){
     //get current mouse position
     isMouseDown = true;
@@ -26,6 +29,7 @@ function mouseResizeMoveHandler(e, taskListPane, appContainer){
     let dx = e.clientX - mousePosXResizer;
     let dy = e.clientY - mousePosYResizer;
     taskListPane.style.width = `${((taskListContainerWidth + dx) *100)/appContainer.getBoundingClientRect().width}%`
+    details.style.width = `${appWidth - sideBarWidth - taskListPane.getBoundingClientRect().width - handleWidth}px`
 }
 
 function mouseUpResizeHandler(e){
