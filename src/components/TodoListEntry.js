@@ -18,7 +18,7 @@ export function TodoListEntry(todo){
     handle.innerHTML = '\u{283F}'
     handle.classList.add('my-handle');
     text.innerText = todo.title;
-    text.classList.add('item', )
+    text.classList.add('item' )
 
     todoElement.appendChild(checkbox);
     todoElement.appendChild(textContainer);

@@ -48,7 +48,6 @@ export function Project(name, id = null){
     }
 
     this.deleteTodo = function(toDelete){
-        console.log(toDelete)
         _todoList = _todoList.filter(todo => todo.id !== toDelete.id)
     }
 

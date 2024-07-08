@@ -168,3 +168,13 @@
 .active-icon{
     color: orange !important;
 }
+
+.todo-item{
+    opacity: 1;
+    transition: opacity 0.4s;
+
+}
+
+.todo-item.fade{
+    opacity: 0;
+}

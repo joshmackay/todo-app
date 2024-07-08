@@ -56,13 +56,15 @@ export default function View() {
     const resizeHandle = document.getElementById('resize-handle')
     let projectClickHandler = null
     let selectTodoHandler = null
+    let completeTodoHandler = null
 
     this.bindAddTodo = function(handler){
         document.addEventListener('keypress', function (event) {
             if (todoInputContainer.classList.contains('focused') && event.key === "Enter" && todoInput.value.toString().trim() !== "") {
                 let date = dateInput.value ? new Date(dateInput.value) : null
-                handler(todoInput.value, date, todoInput.getAttribute('data-priority'));
+                let todoName = todoInput.value
                 todoInput.value = "";
+                handler(todoName, date, todoInput.getAttribute('data-priority'));
                 dateInput.value = ""
             }
         })
@@ -74,6 +76,7 @@ export default function View() {
         });
         saveNewProjectBtn.addEventListener('click', (event) => {
             if(projectInput.value.toString().trim() !== ""){
+                let todoName =
                 handler(projectInput.value);
                 projectInput.value = "";
                 projectControls.classList.add('hidden')
@@ -182,6 +185,11 @@ export default function View() {
         for (let i = 0; i < project.todoList.length; i++) {
             const item = TodoListEntry(project.todoList[i]);
             item.addEventListener('click', () => selectTodoHandler(project.todoList[i]) )
+            item.addEventListener('click', (e) => {
+                if(e.target.type === 'checkbox'){
+                    this.completeTodoHandler(project.todoList[i])
+                }
+            })
             newList.appendChild(item)
         }
 
@@ -189,6 +197,10 @@ export default function View() {
 
     this.selectTodoHandler = function(handler){
         selectTodoHandler = handler
+    }
+
+    this.completeTodoHandler = function(handler){
+        completeTodoHandler = handler
     }
 
     this.renderTodoDetails = function(todo = null){
@@ -253,6 +265,11 @@ export default function View() {
 
     this.getTodoListElement = function(){
         return document.getElementById('todo-list')
+    }
+
+    this.fadeTodo = function(todo){
+        let el = document.querySelector(`[data-id='${todo.id}']`)
+        el.classList.add('fade')
     }
 }
 

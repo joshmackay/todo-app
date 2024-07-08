@@ -23,6 +23,8 @@ export default function Controller(view, projectList) {
     this.setActiveTodo = this.setActiveTodo.bind(this)
     this.view.selectTodoHandler(this.setActiveTodo)
 
+    this.view.completeTodoHandler = this.handleCompleteTodo.bind(this)
+
     this.handleAddNewProject = this.handleAddNewProject.bind(this)
     this.view.bindAddProject(this.handleAddNewProject)
 
@@ -82,7 +84,6 @@ Controller.prototype.handleAddNewTodo = function(todoName, todoDate, todoPriorit
     addToLocalStorage(this.projects)
     this.sortable.destroy()
     this.setSortable()
-
 }
 
 Controller.prototype.handleAddNewProject = function(project) {
@@ -123,7 +124,7 @@ Controller.prototype.deleteTodoHandler = function(){
     this.selectedProject.deleteTodo(this.selectedTodo)
     addToLocalStorage(this.projects)
     this.view.renderTodoList(this.selectedProject)
-    this.setActiveTodo(this.selectedProject.getFirstTodo().id)
+    this.setActiveTodo()
     this.view.renderTodoDetails(this.selectedTodo)
 }
 
@@ -142,4 +143,10 @@ Controller.prototype.handleDeleteProject = function(){
     this.setActiveProject()
     this.view.renderProjectList(this.projects.getAllProjects())
     this.view.renderTodoList(this.selectedProject)
+}
+
+Controller.prototype.handleCompleteTodo = function(todo){
+    this.selectedTodo = todo
+    this.view.fadeTodo(todo)
+    setTimeout(this.deleteTodoHandler, 500 )
 }
