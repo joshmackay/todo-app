@@ -192,12 +192,14 @@ export default function View() {
 
     this.renderTodoDetails = function(todo = null){
         if(todo !== null) {
+            document.getElementById('todo-buttons').style.visibility = 'visible'
             detailTitle.innerHTML = todo.title
             detailDate.innerHTML =  todo.dueDate
             detailPriority.innerHTML = todo.priority
             detailDescription.innerHTML = todo.description
         }
         else{
+            document.getElementById('todo-buttons').style.visibility = 'hidden'
             detailTitle.innerText = "Please add a new todo"
             detailDate.innerHTML =  ""
             detailPriority.innerHTML = ""
@@ -227,8 +229,6 @@ export default function View() {
         modalDateInput.value = formatDate(detailDate.innerText)
         modalPriorityInput.value = detailPriority.innerText
         modalDescriptionInput.value = detailDescription.innerText
-
-
     }
 
     this.bindDeleteProject = function(handler){

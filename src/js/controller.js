@@ -74,7 +74,9 @@ Controller.prototype.getProjects = function(){
 Controller.prototype.handleAddNewTodo = function(todoName, todoDate, todoPriority = null){
     let newTodo = new Todo(todoName, 0, this.selectedProject.id, todoDate ? format(todoDate, 'dd/MM/yyy') : null, todoPriority)
     this.selectedProject.addTodo(newTodo)
+    this.selectedTodo = newTodo
     this.view.renderTodoList(this.selectedProject)
+    this.view.renderTodoDetails(this.selectedTodo)
     addToLocalStorage(this.projects)
     this.setSortable()
 }
