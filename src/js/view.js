@@ -1,24 +1,16 @@
-
 import {TodoListEntry} from "../components/TodoListEntry";
 import {mousedownResizeHandler} from "./resize";
-import {format, formatISO} from "date-fns"
-
 
 export default function View() {
-
     //get DOM elements
     const appContainer = document.getElementById("app-container");
-    const todoMenu = document.getElementById('menu-todo-date');
     const taskListPane = document.getElementById("task-list");
-    const detailPane = document.getElementById('detail-pane')
 
     const todoInputContainer = document.getElementById('task-input-container')
     const todoInput = document.getElementById("todo-input");
     const dateInput = document.getElementById('todo-date-input')
     const todoListElement = document.getElementById("todo-list");
 
-    const menuPrioritySelect = document.getElementsByClassName('menu-priority-item')
-    const projectListSidebar = document.getElementById('menu-todo-project');
     const projectControls = document.getElementById('new-project-controls')
     const addProjectBtn = document.getElementById('add-project-btn');
     const projectInput = document.getElementById('project-input')
@@ -27,14 +19,11 @@ export default function View() {
     const cancelNewProjectBtn = document.getElementById('new-project-cancel')
     const deleteProject = document.getElementById('delete-project-button')
 
-    const priorityContainer = document.getElementById('priority-container')
     const priorityModal = document.getElementById('priority-modal')
     const priorityButton = document.getElementById('priority-button')
-    const priorityToggle = document.getElementById('priority-container')
     const priorityItems = document.getElementsByClassName('priority-item')
 
     const allTodoInputs = document.getElementsByClassName('todo-input-control')
-    const todoInputIcons = document.querySelectorAll('.todo-input-icon')
 
     const detailTitle = document.getElementById('todo-title')
     const detailDate = document.getElementById('todo-date')
@@ -44,7 +33,6 @@ export default function View() {
     const editButton = document.getElementById('edit-button')
 
     const modal = document.getElementById('modal')
-    const editModal = document.getElementById('edit-modal')
     const editSave = document.getElementById('edit-save')
     const editCancel = document.getElementById('edit-cancel')
 
@@ -71,12 +59,11 @@ export default function View() {
     }
 
     this.bindAddProject = function(handler){
-        addProjectBtn.addEventListener('click', (event) => {
+        addProjectBtn.addEventListener('click', () => {
             projectControls.classList.remove('hidden')
         });
-        saveNewProjectBtn.addEventListener('click', (event) => {
+        saveNewProjectBtn.addEventListener('click', () => {
             if(projectInput.value.toString().trim() !== ""){
-                let todoName =
                 handler(projectInput.value);
                 projectInput.value = "";
                 projectControls.classList.add('hidden')
@@ -211,7 +198,7 @@ export default function View() {
             detailDescription.innerHTML = todo.description
         }
         else{
-            detailTitle.innerHTML = "Please add a new todo"
+            detailTitle.innerText = "Please add a new todo"
             detailDate.innerHTML =  ""
             detailPriority.innerHTML = ""
             detailDescription.innerHTML = ""
@@ -230,7 +217,7 @@ export default function View() {
     }
 
     this.bindEditTodo = function(handler){
-        editSave.addEventListener('click', event => {
+        editSave.addEventListener('click', () => {
             handler(modalTitleInput.value, modalDateInput.value, modalPriorityInput.value, modalDescriptionInput.value)
         })
     }
@@ -245,7 +232,7 @@ export default function View() {
     }
 
     this.bindDeleteProject = function(handler){
-        deleteProject.addEventListener('click', event =>{
+        deleteProject.addEventListener('click', () =>{
             handler();
         })
     }

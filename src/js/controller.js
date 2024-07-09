@@ -47,13 +47,7 @@ export default function Controller(view, projectList) {
         this.view.setEventListeners();
         //this.selectedProject = this.projects.getAllProjects()[0]
         this.view.renderProjectList(this.projects.getAllProjects())
-
-
-
         this.view.renderTodoDetails(this.selectedTodo)
-
-
-
     }
 
 }
@@ -82,7 +76,6 @@ Controller.prototype.handleAddNewTodo = function(todoName, todoDate, todoPriorit
     this.selectedProject.addTodo(newTodo)
     this.view.renderTodoList(this.selectedProject)
     addToLocalStorage(this.projects)
-    this.sortable.destroy()
     this.setSortable()
 }
 
@@ -113,19 +106,27 @@ Controller.prototype.setSortable = function() {
 
 Controller.prototype.setActiveTodo = function(todo = null){
     if(todo == null){
-        this.view.renderTodoDetails()
-        return
+        let firstTodo = this.selectedProject.getFirstTodo()
+        console.log(firstTodo)
+        if(firstTodo === null){
+            this.view.renderTodoDetails()
+        }
+        else{
+            this.view.renderTodoDetails(firstTodo)
+        }
     }
-    this.selectedTodo = this.selectedProject.getTodo(todo.id);
-    this.view.renderTodoDetails(this.selectedTodo)
+    else{
+        this.selectedTodo = this.selectedProject.getTodo(todo.id);
+        this.view.renderTodoDetails(this.selectedTodo)
+    }
+
 }
 
 Controller.prototype.deleteTodoHandler = function(){
     this.selectedProject.deleteTodo(this.selectedTodo)
+    this.setActiveTodo()
     addToLocalStorage(this.projects)
     this.view.renderTodoList(this.selectedProject)
-    this.setActiveTodo()
-    this.view.renderTodoDetails(this.selectedTodo)
 }
 
 Controller.prototype.handleEditTodo = function(title, todoDate , priority, description){
